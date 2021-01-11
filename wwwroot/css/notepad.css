@@ -1,0 +1,51 @@
+.projects-list-container {
+    height: 100%;
+  }
+  
+  .projects-list {
+    background-color: #ffff66;
+    background-image: 
+      -moz-radial-gradient(2.9% 45%, circle closest-side, #f5f5f5, #f5f5f5 63%, transparent 0%),
+      -moz-radial-gradient(3% 45%, circle closest-side, #CCCCCC, #CCCCCC 67.5%, transparent 0%);
+    background-size: 100% 25%;
+    border: 1px solid #dedede;
+    font-family: courier, monospace;
+    font-size: 22px;
+    height: 100%;
+    margin: auto;
+    padding: 0 !important;
+    width: 600px;
+  }
+  
+  .projects-list {
+    padding-left: 0! important;
+  }
+  
+  .projects-list > li:first-child {
+    padding-top: 15px;
+  }
+  
+  .projects-list li {
+    border-bottom: 2px solid #38a7e7;
+    height: auto;
+    list-style: none;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding: 0px;
+    text-indent: 40px;
+    text-transform: capitalize;
+  }
+  
+  .projects-list::before {
+    border-left: 2px solid red;
+    border-right: 2px solid red;
+    content: "";
+    display: block;
+    float: left;
+    height: 80%;
+    margin-bottom: 10px;
+    margin-left: 40px;
+    margin-top: 10px;
+    position:absolute;
+    width: 6px;
+  }
