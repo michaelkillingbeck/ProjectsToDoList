@@ -1,18 +1,15 @@
 ﻿@page
 @model IndexModel
+@using ProjectsToDoList.Models
 @{
     ViewData["Title"] = "Projects";
 }
 
 <div class="projects-list-container">
     <ul class="projects-list">
-        <li>This is halloween, halloween...</li>
-        <li>This is halloween, halloween...</li>
-        <li>This is halloween, halloween...</li>
-        <li>This is halloween, halloween...</li>
-        <li>This is halloween, halloween...</li>
-        <li>This is halloween, halloween...</li>
-        <li>This is halloween, halloween...</li>
-        <li>This is halloween, halloween...</li>
+        @foreach (Project project in Model.Projects)
+        {
+            <li>@project.ProjectName</li>
+        }
     </ul>
 </div>
