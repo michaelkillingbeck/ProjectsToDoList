@@ -47,8 +47,7 @@ main {
 
 .footer {
   bottom: 0;
-  height: 5%;;
-  line-height: 60px;
+  height: 5%;
   position: absolute;
   white-space: nowrap;
   width: 10%;
