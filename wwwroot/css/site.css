@@ -46,10 +46,8 @@ main {
 }
 
 .footer {
-  bottom: 0;
   height: 5%;
-  margin-left: 10px;
-  position: absolute;
+  margin: auto;
   white-space: nowrap;
   width: 10%;
 }
