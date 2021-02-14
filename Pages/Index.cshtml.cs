@@ -24,18 +24,18 @@ namespace ProjectsToDoList.Pages
         public IndexModel(IConfiguration configuration, ICloudStorageAccountHelper storageHelper, 
                             ILogger<IndexModel> logger)
         {
-            _logger = logger;
-            Projects = new List<Project>();
-            _configuration = configuration;
-            String connectionString = configuration["ConnectionStrings:ConnectionString"];
-            CloudStorageAccount storageAccount = storageHelper.CreateFromConnectionString(connectionString);
-            _cloudTableHelper = new CloudTableHelper(storageAccount);
+            // _logger = logger;
+            // Projects = new List<Project>();
+            // _configuration = configuration;
+            // String connectionString = configuration["ConnectionStrings:ConnectionString"];
+            // CloudStorageAccount storageAccount = storageHelper.CreateFromConnectionString(connectionString);
+            // _cloudTableHelper = new CloudTableHelper(storageAccount);
         }
 
         public void OnGet()
         {
-            CloudTable table = _cloudTableHelper.GetCloudTableByName(_configuration["ConnectionStrings:TableName"]).Result;
-            Projects = _cloudTableHelper.GetAllEntities<Project>(table);
+            // CloudTable table = _cloudTableHelper.GetCloudTableByName(_configuration["ConnectionStrings:TableName"]).Result;
+            // Projects = _cloudTableHelper.GetAllEntities<Project>(table);
         }
     }
 }
