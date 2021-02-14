@@ -27,7 +27,7 @@ namespace ProjectsToDoList.Pages
             _logger = logger;
             Projects = new List<Project>();
             _configuration = configuration;
-            String connectionString = configuration["ConnectionStrings:ConnectionString"];
+            String connectionString = configuration["ConnectionString"];
             CloudStorageAccount storageAccount = storageHelper.CreateFromConnectionString(connectionString);
             //_cloudTableHelper = new CloudTableHelper(storageAccount);
         }
