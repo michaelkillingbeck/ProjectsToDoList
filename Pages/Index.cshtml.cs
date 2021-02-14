@@ -29,7 +29,7 @@ namespace ProjectsToDoList.Pages
             _configuration = configuration;
             String connectionString = configuration["ConnectionStrings:ConnectionString"];
             CloudStorageAccount storageAccount = storageHelper.CreateFromConnectionString(connectionString);
-            _cloudTableHelper = new CloudTableHelper(storageAccount);
+            //_cloudTableHelper = new CloudTableHelper(storageAccount);
         }
 
         public void OnGet()
