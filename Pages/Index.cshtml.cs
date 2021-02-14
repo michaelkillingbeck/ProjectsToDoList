@@ -29,13 +29,13 @@ namespace ProjectsToDoList.Pages
             _configuration = configuration;
             String connectionString = configuration["ConnectionString"];
             CloudStorageAccount storageAccount = storageHelper.CreateFromConnectionString(connectionString);
-            //_cloudTableHelper = new CloudTableHelper(storageAccount);
+            _cloudTableHelper = new CloudTableHelper(storageAccount);
         }
 
         public void OnGet()
         {
-            // CloudTable table = _cloudTableHelper.GetCloudTableByName(_configuration["ConnectionStrings:TableName"]).Result;
-            // Projects = _cloudTableHelper.GetAllEntities<Project>(table);
+            CloudTable table = _cloudTableHelper.GetCloudTableByName(_configuration["TableName"]).Result;
+            Projects = _cloudTableHelper.GetAllEntities<Project>(table);
         }
     }
 }
