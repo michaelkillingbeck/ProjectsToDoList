@@ -28,8 +28,8 @@ namespace ProjectsToDoList.Pages
             Projects = new List<Project>();
             _configuration = configuration;
             String connectionString = configuration["ConnectionStrings:ConnectionString"];
-            // CloudStorageAccount storageAccount = storageHelper.CreateFromConnectionString(connectionString);
-            // _cloudTableHelper = new CloudTableHelper(storageAccount);
+            CloudStorageAccount storageAccount = storageHelper.CreateFromConnectionString(connectionString);
+            _cloudTableHelper = new CloudTableHelper(storageAccount);
         }
 
         public void OnGet()
