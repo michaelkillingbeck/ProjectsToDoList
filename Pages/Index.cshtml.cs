@@ -1,41 +1,41 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Azure.Cosmos.Table;
-using Microsoft.Extensions.Logging;
-using ProjectsToDoList.DataAccess;
-using ProjectsToDoList.Interfaces;
-using ProjectsToDoList.Models;
-using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace ProjectsToDoList.Pages
+﻿namespace ProjectsToDoList.Pages
 {
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.RazorPages;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.Logging;
+    using ProjectsToDoList.DataAccess.Repositories;
+    using ProjectsToDoList.Interfaces;
+    using ProjectsToDoList.Models;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+
     public class IndexModel : PageModel
     {
-        private readonly ICloudTableHelper _cloudTableHelper;
         private readonly IConfiguration _configuration;
         private readonly ILogger<IndexModel> _logger;
+        private readonly IProjectsRepository _projectsRepository;
+
+        private Int32 _currentPage = 0;
+        private Int32 _pageSize = 15;
         
         public IEnumerable<Project> Projects { get; set; }
 
-        public IndexModel(IConfiguration configuration, ICloudStorageAccountHelper storageHelper, 
-                            ILogger<IndexModel> logger)
+        public IndexModel(IConfiguration configuration, 
+                            ILogger<IndexModel> logger,
+                            IProjectsRepository projectsRepository)
         {
-            _logger = logger;
             Projects = new List<Project>();
             _configuration = configuration;
-            String connectionString = configuration["ConnectionString"];
-            CloudStorageAccount storageAccount = storageHelper.CreateFromConnectionString(connectionString);
-            _cloudTableHelper = new CloudTableHelper(storageAccount);
+            _logger = logger;
+            _projectsRepository = projectsRepository;
         }
 
         public void OnGet()
         {
-            CloudTable table = _cloudTableHelper.GetCloudTableByName(_configuration["TableName"]).Result;
-            Projects = _cloudTableHelper.GetAllEntities<Project>(table);
+            Projects = _projectsRepository.GetPage(_currentPage, _pageSize);
         }
     }
 }

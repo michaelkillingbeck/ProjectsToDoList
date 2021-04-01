@@ -1,4 +1,4 @@
-namespace ProjectsToDoList.DataAccess
+namespace ProjectsToDoList.DataAccess.TableStorage
 {
     using Microsoft.Azure.Cosmos.Table;
     using ProjectsToDoList.Interfaces;

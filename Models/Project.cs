@@ -1,8 +1,8 @@
-using Microsoft.Azure.Cosmos.Table;
-using System;
-
 namespace ProjectsToDoList.Models
 {
+    using Microsoft.Azure.Cosmos.Table;
+    using System;
+
     public class Project : TableEntity
     {
         public Project()

@@ -1,11 +1,11 @@
-using Microsoft.Azure.Cosmos.Table;
-using ProjectsToDoList.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-
-namespace ProjectsToDoList.DataAccess
+namespace ProjectsToDoList.DataAccess.TableStorage
 {
+    using Microsoft.Azure.Cosmos.Table;
+    using ProjectsToDoList.Interfaces;
+    using System;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+
     public class CloudTableHelper : ICloudTableHelper
     {
         private readonly CloudStorageAccount _storageAccount;
