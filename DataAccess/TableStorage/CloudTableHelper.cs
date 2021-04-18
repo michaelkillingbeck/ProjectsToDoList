@@ -62,7 +62,7 @@ namespace ProjectsToDoList.DataAccess.TableStorage
             }
         }
 
-        public async Task<T> InsertOrMergeEntityAsync<T>(CloudTable table, T entity) where T : TableEntity
+        public async Task<T> InsertEntityAsync<T>(CloudTable table, T entity) where T : TableEntity
         {
             if(entity == null)
             {
@@ -71,7 +71,7 @@ namespace ProjectsToDoList.DataAccess.TableStorage
 
             try
             {
-                TableOperation operation = TableOperation.InsertOrMerge(entity);
+                TableOperation operation = TableOperation.Insert(entity);
                 TableResult result = await table.ExecuteAsync(operation);
 
                 T returnedEntity = result.Result as T;

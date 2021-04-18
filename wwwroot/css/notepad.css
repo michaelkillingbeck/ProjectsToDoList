@@ -1,3 +1,7 @@
+.faded-text {
+  color: grey;
+}
+
 .projects-list-container {
     height: 100%;
   }
@@ -22,7 +26,7 @@
   }
   
   .projects-list > li:first-child {
-    padding-top: 15px;
+    padding-top: 35px;
   }
   
   .projects-list li {
@@ -31,8 +35,7 @@
     list-style: none;
     margin-left: 10px;
     margin-right: 10px;
-    padding: 0px;
-    text-indent: 40px;
+    min-height: 35px;
     text-transform: capitalize;
   }
   
@@ -48,4 +51,12 @@
     margin-top: 10px;
     position:absolute;
     width: 6px;
+  }
+
+  .project-name {
+    padding-left: 40px;
+  }
+
+  .project-name:hover {
+    cursor: pointer;
   }

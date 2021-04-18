@@ -5,10 +5,10 @@ namespace ProjectsToDoList.Interfaces
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
-    public interface IProjectsRepository
+    public interface IProjectsService
     {
         IEnumerable<Project> GetAll();
         IEnumerable<Project> GetPage(Int32 pageNumber, Int32 pageSize);
-        Task Save(Project project);
+        Task SaveNewProject(Project newProject);
     }
 }

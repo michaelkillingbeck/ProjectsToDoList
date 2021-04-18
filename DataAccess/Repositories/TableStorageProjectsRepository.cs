@@ -9,6 +9,7 @@ namespace ProjectsToDoList.DataAccess.Repositories
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
 
     public class TableStorageProjectsRepository : IProjectsRepository
     {
@@ -38,25 +39,16 @@ namespace ProjectsToDoList.DataAccess.Repositories
         {
             var projects = GetAll().Skip(pageNumber * pageSize).Take(pageSize).ToList();
 
-            FillPage(projects, pageSize);
-
             return projects;
         }
 
-        private void FillPage(IList<Project> currentPage, Int32 pageSize)
+        public async Task Save(Project project)
         {
-            if(currentPage.Count() >= pageSize)
-            {
-                return;
-            }
-
-            while(currentPage.Count() < pageSize)
-            {
-                currentPage.Add(new Project
-                {
-                    ProjectName = "_"
-                });
-            }
+            project.PartitionKey = "Project";
+            project.Timestamp = DateTime.Now;
+            project.RowKey = project.ProjectName;
+            CloudTable table = _cloudTableHelper.GetCloudTableByName(_configuration["TableName"]).Result;
+            Project savedProject = await _cloudTableHelper.InsertEntityAsync(table, project);
         }
     }
 }

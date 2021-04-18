@@ -10,6 +10,7 @@ namespace ProjectsToDoList
     using ProjectsToDoList.DataAccess.Repositories;
     using ProjectsToDoList.DataAccess.TableStorage;
     using ProjectsToDoList.Interfaces;
+    using ProjectsToDoList.Services;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -28,7 +29,9 @@ namespace ProjectsToDoList
         {
             services.AddScoped<ICloudStorageAccountHelper, CloudStorageAccountHelper>();
             services.AddScoped<IProjectsRepository, TableStorageProjectsRepository>();
+            services.AddScoped<IProjectsService, ProjectsService>();
             services.AddRazorPages();
+            services.AddAntiforgery(header => header.HeaderName = "XSRF-TOKEN");
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
