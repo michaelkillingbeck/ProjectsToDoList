@@ -18,7 +18,7 @@
         private readonly IProjectsService _projectsService;
 
         private Int32 _currentPage = 0;
-        private readonly Int32 _pageSize = 15;
+        private readonly Int32 _pageSize = 20;
         
         public Int32 PageSize => _pageSize;
         public IEnumerable<Project> Projects { get; set; }
