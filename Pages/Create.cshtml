@@ -1,0 +1,16 @@
+@page
+
+@Html.AntiForgeryToken()
+
+<div class="notepad-page-container">
+    <div class="notepad-content">
+        <ul class="notepad-page">
+            @for(Int32 count = 0; count < 15; count++)
+            {
+                <li>
+                    <span class="notepad-line-item"></span>    
+                </li>
+            }
+        </ul>
+    </div>
+</div>

@@ -6,26 +6,28 @@
 }
 @Html.AntiForgeryToken()
 
-<div class="projects-list-container">
-    <ul class="projects-list">
-        @foreach (Project project in Model.Projects)
-        {
+<div class="notepad-page-container">
+    <div class="notepad-content">
+        <ul class="notepad-page">
+            @foreach (Project project in Model.Projects)
+            {
+                <li>
+                    <span class="notepad-line-item">@project.ProjectName</span>    
+                </li>
+            }
+
             <li>
-                <span class="project-name">@project.ProjectName</span>    
+                <div class="notepad-line-item faded-text" contenteditable="true" id="create-new-project">Quick create...</div>
             </li>
-        }
 
-        <li>
-            <div class="project-name faded-text" contenteditable="true" id="create-new-project">Quick create...</div>
-        </li>
+            @for(Int32 count = Model.Projects.Count() + 1; count < Model.PageSize; count++)
+            {
+                <li>
+                    <span class="notepad-line-item"></span>    
+                </li>
+            }
+        </ul>
 
-        @for(Int32 count = Model.Projects.Count() + 1; count < Model.PageSize; count++)
-        {
-            <li>
-                <span class="project-name"></span>    
-            </li>
-        }
-    </ul>
-
-    <button class="create-new">Create New</button>
+        <a asp-page="create" class="btn btn-light create-new">Create New</a>
+    </div>
 </div>

@@ -1,32 +1,4 @@
-﻿html {
-  font-size: 14px;
-  height: 100%;
-  position: relative;
-}
-
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.header {
-  height: 10%;
-}
-
-.border-top {
-  border-top: 1px solid #e5e5e5;
-}
-
-.border-bottom {
-  border-bottom: 1px solid #e5e5e5;
-}
-
-.box-shadow {
-  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
-}
-
-body {
+﻿body {
   background-image: radial-gradient(
     circle at top right,
     #ff06,
@@ -35,8 +7,20 @@ body {
   height: 100%;
 }
 
-main {
-  height: 100%;
+.border-bottom {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.border-top {
+  border-top: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+.centred-title {
+  margin: auto;
 }
 
 .container {
@@ -58,6 +42,18 @@ main {
   width: 80%;
 }
 
-.centred-title {
-  margin: auto;
+html {
+  font-size: 14px;
+  height: 100%;
+  position: relative;
+}
+
+main {
+  height: 100%;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
 }

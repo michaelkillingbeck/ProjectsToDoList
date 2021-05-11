@@ -1,54 +1,4 @@
-.create-new {
-  background: none;
-  border-radius: 20px;
-  font-family: 'courier';
-  margin-left: 50px;
-}
-
-.faded-text {
-  color: grey;
-}
-
-.projects-list-container {
-    background-color: #ffff66;
-    background-image: 
-      -moz-radial-gradient(2.9% 45%, circle closest-side, #f5f5f5, #f5f5f5 63%, transparent 0%),
-      -moz-radial-gradient(3% 45%, circle closest-side, #CCCCCC, #CCCCCC 67.5%, transparent 0%);
-    background-size: 100% 25%;
-    border: 1px solid #dedede;
-    height: 100%;
-    margin: auto;
-    width: 50%;
-  }
-  
-.projects-list {
-  font-family: courier, monospace;
-  font-size: 22px;
-  height: 93%;
-  margin: auto;
-  padding: 0 !important;
-  width: 100%;
-}
-
-.projects-list {
-  padding-left: 0! important;
-}
-
-.projects-list > li:first-child {
-  padding-top: 35px;
-}
-
-.projects-list li {
-  border-bottom: 2px solid #38a7e7;
-  height: auto;
-  list-style: none;
-  margin-left: 10px;
-  margin-right: 10px;
-  min-height: 35px;
-  text-transform: capitalize;
-}
-
-.projects-list::before {
+.notepad-content::before {
   border-left: 2px solid red;
   border-right: 2px solid red;
   content: "";
@@ -61,11 +11,47 @@
   position:absolute;
   width: 6px;
 }
+  
+.notepad-page {
+  font-family: courier, monospace;
+  font-size: 22px;
+  height: 93%;
+  margin: auto;
+  padding: 0 !important;
+  padding-left: 0! important;
+  width: 100%;
+}
 
-.project-name {
+.notepad-page-container {
+  background-color: #ffff66;
+  background-image: 
+    -moz-radial-gradient(2.9% 45%, circle closest-side, #f5f5f5, #f5f5f5 63%, transparent 0%),
+    -moz-radial-gradient(3% 45%, circle closest-side, #CCCCCC, #CCCCCC 67.5%, transparent 0%);
+  background-size: 100% 25%;
+  border: 1px solid #dedede;
+  height: 100%;
+  margin: auto;
+  width: 50%;
+}
+
+.notepad-page > li:first-child {
+  padding-top: 35px;
+}
+
+.notepad-page li {
+  border-bottom: 2px solid #38a7e7;
+  height: auto;
+  list-style: none;
+  margin-left: 10px;
+  margin-right: 10px;
+  min-height: 35px;
+  text-transform: capitalize;
+}
+
+.notepad-line-item {
   padding-left: 40px;
 }
 
-.project-name:hover {
+.notepad-line-item:hover {
   cursor: pointer;
 }
