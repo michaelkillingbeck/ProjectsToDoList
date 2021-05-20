@@ -1,16 +1,29 @@
 @page
+@model CreateModel
 
 @Html.AntiForgeryToken()
 
 <div class="notepad-page-container">
     <div class="notepad-content">
-        <ul class="notepad-page">
-            @for(Int32 count = 0; count < 15; count++)
-            {
+        <form method="post">
+            <ul class="notepad-page">
                 <li>
-                    <span class="notepad-line-item"></span>    
+                    <input asp-for="NewProject.ProjectName" class="notepad-line-item faded-text new-project-placeholder" type="text" id="new-project-title" placeholder="Project title..."/>
                 </li>
-            }
-        </ul>
+
+                <li>
+                    <input class="notepad-line-item faded-text new-project-placeholder" id="new-project-task" type="text" placeholder="New task..."/>
+                </li>
+
+                @for(Int32 count = 2; count < @Model.PageSize; count++)
+                {
+                    <li>
+                        <input class="notepad-line-item new-task new-project-placeholder"></input>  
+                    </li>
+                }
+            </ul>
+
+            <button class="btn btn-light notepad-button" type="submit">Save</button>
+        </form>
     </div>
 </div>
