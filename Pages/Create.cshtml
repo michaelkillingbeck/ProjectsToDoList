@@ -3,27 +3,47 @@
 
 @Html.AntiForgeryToken()
 
+@Html.HiddenFor(model => model.PageSize)
+
 <div class="notepad-page-container">
     <div class="notepad-content">
-        <form method="post">
+        <form id="new-project-form" method="post">
             <ul class="notepad-page">
+                <span asp-validation-for="NewProject.ProjectName" class="text-danger notepad-line-item"></span>
+
                 <li>
-                    <input asp-for="NewProject.ProjectName" class="notepad-line-item faded-text new-project-placeholder" type="text" id="new-project-title" placeholder="Project title..."/>
+                    <input asp-for="NewProject.ProjectName" class="notepad-line-item faded-text new-project-placeholder" 
+                        type="text" id="new-project-title" placeholder="Project title..." required />
                 </li>
 
                 <li>
-                    <input class="notepad-line-item faded-text new-project-placeholder" id="new-project-task" type="text" placeholder="New task..."/>
+                    <input class="notepad-line-item faded-text new-project-placeholder" id="new-project-task" 
+                    type="text" placeholder="New task..."/>
                 </li>
+                <ul id="project-tasks">
+                    @for(Int32 count = 0; count < Math.Min(@Model.NewProject.ProjectTasks.Count(), @Model.PageSize); count++)
+                    {
+                        <li>
+                            <input readonly="readonly" 
+                                class="notepad-line-item new-task new-project-placeholder" 
+                                value="@Model.NewProject.ProjectTasks.ToList()[count]"></input>  
+                        </li>
+                    }
 
-                @for(Int32 count = 2; count < @Model.PageSize; count++)
-                {
-                    <li>
-                        <input class="notepad-line-item new-task new-project-placeholder"></input>  
-                    </li>
-                }
+                    @for(Int32 count = @Model.NewProject.ProjectTasks.Count(); count < @Model.PageSize; count++)
+                    {
+                        <li>
+                            <input readonly="readonly" class="notepad-line-item new-task new-project-placeholder"></input>  
+                        </li>
+                    }
+                </ul>
             </ul>
 
-            <button class="btn btn-light notepad-button" type="submit">Save</button>
+            <button class="btn notepad-button" type="submit">Save</button>
         </form>
     </div>
 </div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

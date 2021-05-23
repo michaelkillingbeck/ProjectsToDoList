@@ -1,8 +1,10 @@
 namespace ProjectsToDoList.Models
 {
+    using Microsoft.AspNetCore.Mvc;
     using Microsoft.Azure.Cosmos.Table;
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
 
     public class ProjectWithTasks : TableEntity
     {
@@ -10,7 +12,11 @@ namespace ProjectsToDoList.Models
         {
         }
 
+        [BindProperty]
+        [Required(ErrorMessage="Project Name is required")]
         public String ProjectName { get; set; }
+
+        [BindProperty]
         public IEnumerable<String> ProjectTasks { get; set; }
     }
 }

@@ -68,11 +68,15 @@ main {
   margin-top: 10px;
 }
 
+.notepad-button:active {
+  background-color: #0000 !important;
+}
+
 .notepad-button:hover {
-background: none;
-background-color: #38a7e7;
-border-width: 3px;
-box-shadow: 0 0.5em 0.5em -0.4em var(--hover);
-color: black;
-transform: translateY(-0.25em);
+  background: none;
+  background-color: #38a7e7;
+  border-width: 3px;
+  box-shadow: 0 0.5em 0.5em -0.4em var(--hover);
+  color: black;
+  transform: translateY(-0.25em);
 }

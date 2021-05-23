@@ -49,7 +49,7 @@
 }
 
 .notepad-line-item {
-  padding-left: 40px;
+  margin-left: 40px;
 }
 
 .notepad-line-item:hover {

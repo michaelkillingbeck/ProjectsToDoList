@@ -1,29 +1,29 @@
-let newTaskClass = 'new-task';
 let tasks = [];
 
-function addTask(taskName) {
-    tasks.push(taskName);
+function addNewTaskToList(taskListContainerId, taskName) {
+    let taskListContainer = document.getElementById(taskListContainerId);
+
+    let newTaskElement = document.createElement("li");
+    let newInputElement = document.createElement("input");
+    newInputElement.classList.add("notepad-line-item");
+    newInputElement.classList.add("new-task");
+    newInputElement.classList.add("new-project-placeholder");
+    newInputElement.value = taskName;
+    newInputElement.name = "NewProject.ProjectTasks";
+    newTaskElement.appendChild(newInputElement);
+    taskListContainer.prepend(newTaskElement);
 }
 
-function addNewTaskToList(className, taskListContainerClassName) {
-    let taskListContainer = document.getElementsByClassName(taskListContainerClassName)[0];
-    let taskList = document.getElementsByClassName(className);
-    let taskListArray = Object.values(taskList);
+function hideOverflowedTasks(pageSizeElementId) {
+    let pageSizeElement = document.getElementById(pageSizeElementId);
+    let pageSize = Number(pageSizeElement.value);
+    let allTasks = document.querySelectorAll("#project-tasks > li");
 
-    tasks.forEach((task, index) => {
-        if(index < taskListArray.length) {
-            taskList[index].value = task;
-            taskList[index].name = "NewProject.ProjectTasks";
-        } else {
-            let newTaskElement = document.createElement("li");
-            newTaskElement.hidden = true;
-            let newInputElement = document.createElement("input");
-            newInputElement.value = tasks[index];
-            newInputElement.name = "NewProject.ProjectTasks";
-            newTaskElement.appendChild(newInputElement);
-            taskListContainer.appendChild(newTaskElement);
+    allTasks.forEach((task, index) => {
+        if(index >= pageSize) {
+            task.style.display = 'none';
         }
     });
 }
 
-export { addTask, addNewTaskToList };
+export { addNewTaskToList, hideOverflowedTasks };
