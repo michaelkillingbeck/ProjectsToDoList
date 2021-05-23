@@ -21,16 +21,7 @@
                     type="text" placeholder="New task..."/>
                 </li>
                 <ul id="project-tasks">
-                    @for(Int32 count = 0; count < Math.Min(@Model.NewProject.ProjectTasks.Count(), @Model.PageSize); count++)
-                    {
-                        <li>
-                            <input readonly="readonly" 
-                                class="notepad-line-item new-task new-project-placeholder" 
-                                value="@Model.NewProject.ProjectTasks.ToList()[count]"></input>  
-                        </li>
-                    }
-
-                    @for(Int32 count = @Model.NewProject.ProjectTasks.Count(); count < @Model.PageSize; count++)
+                    @for(Int32 count = 0; count < @Model.PageSize; count++)
                     {
                         <li>
                             <input readonly="readonly" class="notepad-line-item new-task new-project-placeholder"></input>  

@@ -29,6 +29,7 @@ namespace ProjectsToDoList
         {
             services.AddScoped<ICloudStorageAccountHelper, CloudStorageAccountHelper>();
             services.AddScoped<IProjectsRepository, TableStorageProjectsRepository>();
+            services.AddScoped<ITasksRepository, TableStorageTasksRepository>();
             services.AddScoped<IProjectsService, ProjectsService>();
             services.AddRazorPages();
             services.AddAntiforgery(header => header.HeaderName = "XSRF-TOKEN");

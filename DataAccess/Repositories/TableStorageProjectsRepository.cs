@@ -47,7 +47,7 @@ namespace ProjectsToDoList.DataAccess.Repositories
             project.PartitionKey = "Project";
             project.Timestamp = DateTime.Now;
             project.RowKey = project.ProjectName;
-            CloudTable table = _cloudTableHelper.GetCloudTableByName(_configuration["TableName"]).Result;
+            CloudTable table = await _cloudTableHelper.GetCloudTableByName(_configuration["TableName"]);
             Project savedProject = await _cloudTableHelper.InsertEntityAsync(table, project);
         }
     }

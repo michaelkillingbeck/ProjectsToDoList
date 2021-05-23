@@ -11,11 +11,14 @@ namespace ProjectsToDoList.Services
     {
         private readonly ILogger _logger;
         private readonly IProjectsRepository _projectsRepository;
+        private readonly ITasksRepository _tasksRepository;
 
-        public ProjectsService(ILogger<ProjectsService> logger, IProjectsRepository projectsRepository)
+        public ProjectsService(ILogger<ProjectsService> logger, IProjectsRepository projectsRepository,
+                                ITasksRepository tasksRepository)
         {
             _logger = logger;
             _projectsRepository = projectsRepository;
+            _tasksRepository = tasksRepository;
         }
 
         public IEnumerable<Project> GetAll()
@@ -33,6 +36,24 @@ namespace ProjectsToDoList.Services
         public async Task SaveNewProject(Project newProject)
         {
             await _projectsRepository.Save(newProject);
+        }
+
+        public async Task SaveNewProjectWithTasks(ProjectWithTasks newProject)
+        {
+            await SaveNewProject(newProject);
+            List<ProjectTask> tasks = new List<ProjectTask>();
+
+            foreach(String task in newProject.ProjectTasks)
+            {
+                tasks.Add(new ProjectTask
+                {
+                    PartitionKey = newProject.ProjectName,
+                    RowKey = task,
+                    TaskName = task
+                });       
+            }
+
+            await _tasksRepository.SaveAll(tasks);
         }
     }
 }

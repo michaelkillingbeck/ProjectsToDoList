@@ -1,33 +1,33 @@
 namespace ProjectsToDoList.Pages
 {
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Mvc.ModelBinding;
     using Microsoft.AspNetCore.Mvc.RazorPages;
-    using Microsoft.AspNetCore.Mvc.ViewFeatures;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Logging;
+    using ProjectsToDoList.Interfaces;
     using ProjectsToDoList.Models;
     using System;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
 
     public class CreateModel : PageModel
     {
         private readonly IConfiguration _configuration;
         private readonly ILogger<CreateModel> _logger;
         private readonly Int32 _pageSize = 17;
+        private readonly IProjectsService _projectsService;
 
         [BindProperty]
         public ProjectWithTasks NewProject { get; set; }
         public Int32 PageSize => _pageSize;
 
         public CreateModel(IConfiguration configuration,
-                            ILogger<CreateModel> logger)
+                            ILogger<CreateModel> logger,
+                            IProjectsService projectsService)
         {            
             _configuration = configuration;
             _logger = logger;
-
-            NewProject = new ProjectWithTasks();
-            NewProject.ProjectTasks = new List<String>();
+            _projectsService = projectsService;
         }
 
         public void OnGet(ProjectWithTasks newProject = null)
@@ -39,13 +39,14 @@ namespace ProjectsToDoList.Pages
             }
         }
 
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPostAsync()
         {
             if(ModelState.IsValid == false)
             {
                 return RedirectToPage("Create", NewProject);
             }
 
+            await _projectsService.SaveNewProjectWithTasks(NewProject);
             return RedirectToPage("Index");
         }
     }

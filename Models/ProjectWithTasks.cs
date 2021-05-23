@@ -6,15 +6,11 @@ namespace ProjectsToDoList.Models
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-    public class ProjectWithTasks : TableEntity
+    public class ProjectWithTasks : Project
     {
         public ProjectWithTasks()
         {
         }
-
-        [BindProperty]
-        [Required(ErrorMessage="Project Name is required")]
-        public String ProjectName { get; set; }
 
         [BindProperty]
         public IEnumerable<String> ProjectTasks { get; set; }
