@@ -1,3 +1,16 @@
+.basic-notepad-button {
+    margin-top: 0px !important;
+}
+
+.basic-notepad-button:hover {
+    transform: none !important;
+}
+
+.edit-page-task {
+    background-color: transparent;
+    border: none;
+}
+
 .project-title {
     text-align: center;
     margin-left: 0px;

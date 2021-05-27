@@ -7,6 +7,7 @@ namespace ProjectsToDoList.Pages
     using ProjectsToDoList.Models;
     using System.Threading.Tasks;
     using System;
+    using Microsoft.AspNetCore.Mvc;
 
     public class EditModel : PageModel
     {
@@ -26,9 +27,18 @@ namespace ProjectsToDoList.Pages
             _projectsService = projectsService;
         }
 
-        public async Task OnGetAsync(String projectName)
+        public async Task<IActionResult> OnGetAsync(String projectName)
         {
-            CurrentProject = await _projectsService.GetProjectByName(projectName);
+            CurrentProject = await _projectsService.GetProjectByName(projectName.ToLower());
+
+            return Page();
+        }
+
+        public async Task<IActionResult> OnPostSaveNewTaskAsync(String projectName, String taskName)
+        {
+            await _projectsService.SaveNewTask(projectName.ToLower(), taskName);
+
+            return RedirectToPage("Edit", new { projectName });
         }
     }
 }

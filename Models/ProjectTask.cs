@@ -9,6 +9,7 @@ namespace ProjectsToDoList.Models
         {            
         }
 
+        public Boolean Completed { get; set; }
         public String ProjectRowKey { get; set; }
         public String TaskName { get; set; }
     }

@@ -47,5 +47,11 @@ namespace ProjectsToDoList.DataAccess.Repositories
 
             await table.ExecuteBatchAsync(batchOperation);
         }
+
+        public async Task SaveNewTask(ProjectTask newTask)
+        {
+            CloudTable table = await _cloudTableHelper.GetCloudTableByName(_configuration["TasksTableName"]);
+            await _cloudTableHelper.InsertEntityAsync<ProjectTask>(table, newTask);
+        }
     }
 }

@@ -1,5 +1,3 @@
-let tasks = [];
-
 function addNewTaskToList(taskListContainerId, taskName) {
     let taskListContainer = document.getElementById(taskListContainerId);
 

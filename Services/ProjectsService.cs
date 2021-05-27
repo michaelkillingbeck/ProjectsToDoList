@@ -62,5 +62,17 @@ namespace ProjectsToDoList.Services
 
             await _tasksRepository.SaveAll(tasks);
         }
+
+        public async Task SaveNewTask(String projectName, String taskName)
+        {
+            ProjectTask newTask = new ProjectTask
+            {
+                PartitionKey = projectName,
+                RowKey = taskName,
+                TaskName = taskName
+            };
+
+            await _tasksRepository.SaveNewTask(newTask);
+        }
     }
 }

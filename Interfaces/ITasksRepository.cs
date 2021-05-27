@@ -9,5 +9,6 @@ namespace ProjectsToDoList.Interfaces
     {
         Task<IEnumerable<ProjectTask>> GetTasksForProject(String name);
         Task SaveAll(IEnumerable<ProjectTask> tasks);
+        Task SaveNewTask(ProjectTask newTask);
     }
 }

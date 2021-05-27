@@ -12,5 +12,6 @@ namespace ProjectsToDoList.Interfaces
         Task<ExistingProjectWithTasks> GetProjectByName(String name);
         Task SaveNewProject(Project newProject);
         Task SaveNewProjectWithTasks(NewProjectWithTasks newProject);
+        Task SaveNewTask(String projectName, String taskName);
     }
 }
