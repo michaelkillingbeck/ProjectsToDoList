@@ -33,12 +33,19 @@ namespace ProjectsToDoList.Services
             return projects;
         }
 
+        public async Task<ExistingProjectWithTasks> GetProjectByName(String name)
+        {
+            ExistingProjectWithTasks project = await _projectsRepository.GetProjectByName(name) as ExistingProjectWithTasks;
+            project.ProjectTasks = await _tasksRepository.GetTasksForProject(name);
+            return project;
+        }
+
         public async Task SaveNewProject(Project newProject)
         {
             await _projectsRepository.Save(newProject);
         }
 
-        public async Task SaveNewProjectWithTasks(ProjectWithTasks newProject)
+        public async Task SaveNewProjectWithTasks(NewProjectWithTasks newProject)
         {
             await SaveNewProject(newProject);
             List<ProjectTask> tasks = new List<ProjectTask>();

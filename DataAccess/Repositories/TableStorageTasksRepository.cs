@@ -29,6 +29,12 @@ namespace ProjectsToDoList.DataAccess.Repositories
             _cloudTableHelper = new CloudTableHelper(storageAccount);
         }
 
+        public async Task<IEnumerable<ProjectTask>> GetTasksForProject(String projectName)
+        {
+            CloudTable table = await _cloudTableHelper.GetCloudTableByName(_configuration["TasksTableName"]);
+            return _cloudTableHelper.GetAllEntitiesByPartitionKey<ProjectTask>(table, projectName);
+        }
+
         public async Task SaveAll(IEnumerable<ProjectTask> tasks)
         {
             CloudTable table = await _cloudTableHelper.GetCloudTableByName(_configuration["TasksTableName"]);

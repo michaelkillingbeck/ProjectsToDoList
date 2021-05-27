@@ -1,0 +1,30 @@
+@page "{projectName}"
+@model EditModel
+
+@Html.AntiForgeryToken()
+
+<div class="notepad-page-container">
+    <div class="notepad-content">
+        <ul class="notepad-page">
+            <li class="project-title">
+                <span>@Model.CurrentProject.ProjectName</span>
+            </li> 
+
+            @foreach (var task in @Model.CurrentProject.ProjectTasks)
+            {
+                <li>
+                    <a class="notepad-line-item">@task.TaskName</a>
+                </li>
+            }
+
+            @for(Int32 count = @Model.CurrentProject.ProjectTasks.Count(); count < @Model.PageSize; count++)
+            {
+                <li>
+                    <a class="notepad-line-item"></a>
+                </li>
+            }
+        </ul>
+
+        <a asp-page="index" class="btn notepad-button">Back</a>
+    </div>
+</div>

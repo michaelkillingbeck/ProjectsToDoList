@@ -12,7 +12,7 @@
             @foreach (Project project in Model.Projects)
             {
                 <li>
-                    <span class="notepad-line-item">@project.ProjectName</span>    
+                    <a asp-page="Edit" asp-route-projectname="@project.ProjectName" class="notepad-line-item">@project.ProjectName</a>    
                 </li>
             }
 

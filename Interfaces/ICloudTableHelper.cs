@@ -8,6 +8,7 @@ namespace ProjectsToDoList.Interfaces
     public interface ICloudTableHelper
     {
         IEnumerable<T> GetAllEntities<T>(CloudTable table) where T : TableEntity, new();
+        IEnumerable<T> GetAllEntitiesByPartitionKey<T>(CloudTable cloudTable, String partitionKey) where T : TableEntity, new();
         Task<CloudTable> GetCloudTableByName(String tableName);
         Task<T> GetEntity<T>(CloudTable table, String partitionKey, String rowKey) where T : TableEntity;
         Task<T> InsertEntityAsync<T>(CloudTable table, T entity) where T : TableEntity;

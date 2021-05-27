@@ -18,7 +18,7 @@ namespace ProjectsToDoList.Pages
         private readonly IProjectsService _projectsService;
 
         [BindProperty]
-        public ProjectWithTasks NewProject { get; set; }
+        public NewProjectWithTasks NewProject { get; set; }
         public Int32 PageSize => _pageSize;
 
         public CreateModel(IConfiguration configuration,
@@ -30,7 +30,7 @@ namespace ProjectsToDoList.Pages
             _projectsService = projectsService;
         }
 
-        public void OnGet(ProjectWithTasks newProject = null)
+        public void OnGet(NewProjectWithTasks newProject = null)
         {
             NewProject = newProject;
             if(NewProject.ProjectTasks == null)

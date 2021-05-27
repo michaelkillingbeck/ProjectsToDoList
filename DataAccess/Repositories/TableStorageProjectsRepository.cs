@@ -16,6 +16,7 @@ namespace ProjectsToDoList.DataAccess.Repositories
         private readonly ICloudTableHelper _cloudTableHelper;
         private readonly IConfiguration _configuration;
         private readonly ILogger _logger;
+        private readonly String _partitionKey = "Project";
 
         public TableStorageProjectsRepository(ICloudStorageAccountHelper storageHelper,
                                     IConfiguration configuration,
@@ -37,9 +38,15 @@ namespace ProjectsToDoList.DataAccess.Repositories
 
         public IEnumerable<Project> GetPage(Int32 pageNumber, Int32 pageSize)
         {
-            var projects = GetAll().Skip(pageNumber * pageSize).Take(pageSize).ToList();
+            List<Project> projects = GetAll().Skip(pageNumber * pageSize).Take(pageSize).ToList();
 
             return projects;
+        }
+
+        public async Task<ExistingProjectWithTasks> GetProjectByName(String name)
+        {
+            CloudTable table = await _cloudTableHelper.GetCloudTableByName(_configuration["TableName"]);
+            return await _cloudTableHelper.GetEntity<ExistingProjectWithTasks>(table, _partitionKey, name);
         }
 
         public async Task Save(Project project)

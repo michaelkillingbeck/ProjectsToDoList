@@ -4,6 +4,7 @@ namespace ProjectsToDoList.DataAccess.TableStorage
     using ProjectsToDoList.Interfaces;
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
 
     public class CloudTableHelper : ICloudTableHelper
@@ -27,6 +28,21 @@ namespace ProjectsToDoList.DataAccess.TableStorage
             catch(Exception)
             {
                 Console.WriteLine("Failure performing Retrieve operation.");
+                throw;
+            }
+        }
+
+        public IEnumerable<T> GetAllEntitiesByPartitionKey<T>(CloudTable cloudTable, String partitionKey) where T : TableEntity, new()
+        {
+            try
+            {
+                TableQuery<T> query = new TableQuery<T>()
+                                        .Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, partitionKey));
+                
+                return cloudTable.ExecuteQuery<T>(query).ToList();
+            }
+            catch(Exception)
+            {
                 throw;
             }
         }

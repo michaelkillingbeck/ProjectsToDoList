@@ -1,3 +1,12 @@
+a {
+  color: #000;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
 .create-new {
     background: none;
     border-color: #38a7e7;
