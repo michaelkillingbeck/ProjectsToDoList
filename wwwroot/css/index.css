@@ -26,6 +26,11 @@ a:hover {
   transform: translateY(-0.25em);
 }
 
+#create-new-project {
+  background: transparent;
+  border: none;
+}
+
 .faded-text {
   color: grey;
 }

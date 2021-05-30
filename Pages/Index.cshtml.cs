@@ -1,5 +1,6 @@
 ﻿namespace ProjectsToDoList.Pages
 {
+    using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.RazorPages;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Logging;
@@ -36,7 +37,7 @@
             Projects = _projectsService.GetPage(_currentPage, _pageSize);
         }
 
-        public async Task OnPostSaveNewProjectAsync(String projectName)
+        public async Task<IActionResult> OnPostSaveNewProjectAsync(String projectName)
         {
             Project newProject = new Project
             {
@@ -44,6 +45,8 @@
             };
 
             await _projectsService.SaveNewProject(newProject);
+
+            return RedirectToPage("Index");
         }
     }
 }
