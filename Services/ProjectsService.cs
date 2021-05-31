@@ -5,6 +5,7 @@ namespace ProjectsToDoList.Services
     using ProjectsToDoList.Models;
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
 
     public class ProjectsService : IProjectsService
@@ -38,6 +39,11 @@ namespace ProjectsToDoList.Services
             ExistingProjectWithTasks project = await _projectsRepository.GetProjectByName(name) as ExistingProjectWithTasks;
             project.ProjectTasks = await _tasksRepository.GetTasksForProject(name);
             return project;
+        }
+
+        public Int32 NumberOfProjects()
+        {
+            return GetAll().Count();
         }
 
         public async Task SaveNewProject(Project newProject)

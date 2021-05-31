@@ -32,5 +32,10 @@
         </ul>
 
         <a asp-page="create" class="btn notepad-button">Create New</a>
+
+        @if (Model.MorePages)
+        {
+            <a asp-page="Index" asp-route-pagenumber="@(@Model.CurrentPage + 1)" class="btn btn-sm notepad-button">@(@Model.CurrentPage + 1)</a>
+        }
     </div>
 </div>

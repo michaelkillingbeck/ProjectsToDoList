@@ -17,8 +17,11 @@
         private readonly IProjectsService _projectsService;
 
         private Int32 _currentPage = 0;
-        private readonly Int32 _pageSize = 20;
+        private readonly Int32 _pageSize = 19;
+        private Byte _totalPages = 0;
         
+        public Int32 CurrentPage => _currentPage;
+        public Boolean MorePages => _currentPage <= _totalPages;
         public Int32 PageSize => _pageSize;
         public IEnumerable<Project> Projects { get; set; }
 
@@ -32,9 +35,13 @@
             _projectsService = projectsService;
         }
 
-        public void OnGet()
+        public IActionResult OnGet(Int32 pagenumber = 0)
         {
+            _currentPage = pagenumber;
             Projects = _projectsService.GetPage(_currentPage, _pageSize);
+            _totalPages = Convert.ToByte(Math.Ceiling((Double)(_projectsService.NumberOfProjects() / PageSize)));
+            
+            return Page();
         }
 
         public async Task<IActionResult> OnPostSaveNewProjectAsync(String projectName)

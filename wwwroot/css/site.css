@@ -62,10 +62,12 @@ main {
   background: none;
   border-color: #38a7e7;
   border-radius: 20px;
+  display: inline-block;
   color: black;
   font-family: 'courier';
+  font-size: 0.8rem;
   margin-left: 50px;
-  margin-top: 10px;
+  margin-top: 5px;
 }
 
 .notepad-button:active {
