@@ -10,7 +10,7 @@
                 <span id="current-project-title">@Model.CurrentProject.ProjectName</span>
             </li> 
 
-            @for(Int32 count = 0; count < @Model.CurrentProject.ProjectTasks.Count(); count++)
+            @for(Int32 count = 0; count < Math.Min(@Model.CurrentProject.ProjectTasks.Count(), Model.PageSize); count++)
             {
                 <li>
                     <input asp-for="CurrentProject.ProjectTasks.ToList()[count].Completed" 
@@ -31,7 +31,7 @@
                 </li>
             </form>
 
-            @for(Int32 count = @Model.CurrentProject.ProjectTasks.Count() + 1; count < @Model.PageSize; count++)
+            @for(Int32 count = @Model.CurrentProject.ProjectTasks.Count(); count < @Model.PageSize; count++)
             {
                 <li>
                     <a class="notepad-line-item"></a>

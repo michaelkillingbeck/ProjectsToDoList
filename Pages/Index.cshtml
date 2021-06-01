@@ -23,7 +23,7 @@
                 </li>
             </form>
 
-            @for(Int32 count = Model.Projects.Count() + 1; count < Model.PageSize; count++)
+            @for(Int32 count = Model.Projects.Count() + 1; count <= Model.PageSize; count++)
             {
                 <li>
                     <span class="notepad-line-item"></span>    
@@ -33,9 +33,14 @@
 
         <a asp-page="create" class="btn notepad-button">Create New</a>
 
-        @if (Model.MorePages)
+        @if (Model.NextPageAvailable)
         {
-            <a asp-page="Index" asp-route-pagenumber="@(@Model.CurrentPage + 1)" class="btn btn-sm notepad-button">@(@Model.CurrentPage + 1)</a>
+            <a asp-page="Index" asp-route-pagenumber="@(@Model.CurrentPage + 1)" class="btn btn-sm notepad-button">Next Page</a>
+        }
+
+        @if (Model.PreviousPageAvailable)
+        {
+            <a asp-page="Index" asp-route-pagenumber="@(@Model.CurrentPage - 1)" class="btn btn-sm notepad-button">Previous Page</a>
         }
     </div>
 </div>

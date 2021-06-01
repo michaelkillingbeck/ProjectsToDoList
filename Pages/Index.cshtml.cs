@@ -17,12 +17,13 @@
         private readonly IProjectsService _projectsService;
 
         private Int32 _currentPage = 0;
-        private readonly Int32 _pageSize = 19;
+        private readonly Int32 _pageSize = 18;
         private Byte _totalPages = 0;
         
         public Int32 CurrentPage => _currentPage;
-        public Boolean MorePages => _currentPage <= _totalPages;
+        public Boolean NextPageAvailable => _currentPage < _totalPages;
         public Int32 PageSize => _pageSize;
+        public Boolean PreviousPageAvailable => _currentPage > 0;
         public IEnumerable<Project> Projects { get; set; }
 
         public IndexModel(IConfiguration configuration, 

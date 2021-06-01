@@ -16,7 +16,7 @@ namespace ProjectsToDoList.Pages
         private readonly IProjectsService _projectsService;
 
         public ExistingProjectWithTasks CurrentProject { get; set; }
-        public Int32 PageSize => 19;
+        public Int32 PageSize => 17;
 
         public EditModel(IConfiguration configuration,
                             ILogger<EditModel> logger,
