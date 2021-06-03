@@ -40,5 +40,17 @@
         </ul>
 
         <a asp-page="index" class="btn notepad-button">Back</a>
+        
+        @if(Model.NextPageAvailable)
+        {
+            <a asp-page="Edit" asp-route-projectname="@Model.CurrentProject.ProjectName" 
+                asp-route-pagenumber="@(@Model.CurrentPage + 1)" class="btn btn-sm notepad-button">Next Page</a>
+        }
+
+        @if (Model.CurrentPage > 0)
+        {
+            <a asp-page="Edit" asp-route-projectname="@Model.CurrentProject.ProjectName" 
+                asp-route-pagenumber="@(@Model.CurrentPage - 1)" class="btn btn-sm notepad-button">Previous Page</a>
+        }
     </div>
 </div>
