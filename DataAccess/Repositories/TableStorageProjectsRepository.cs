@@ -51,11 +51,19 @@ namespace ProjectsToDoList.DataAccess.Repositories
 
         public async Task Save(Project project)
         {
-            project.PartitionKey = "Project";
+            project.PartitionKey = _partitionKey;
             project.Timestamp = DateTime.Now;
             project.RowKey = project.ProjectName;
             CloudTable table = await _cloudTableHelper.GetCloudTableByName(_configuration["TableName"]);
             Project savedProject = await _cloudTableHelper.InsertEntityAsync(table, project);
+        }
+
+        public async Task Update(Project project)
+        {
+            project.PartitionKey = _partitionKey;
+
+            CloudTable table = await _cloudTableHelper.GetCloudTableByName(_configuration["TableName"]);
+            Project updatedProject = await _cloudTableHelper.UpdateEntityAsync(table, project);
         }
     }
 }

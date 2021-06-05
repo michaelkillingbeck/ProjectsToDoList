@@ -7,8 +7,9 @@ namespace ProjectsToDoList.Interfaces
 
     public interface ITasksRepository
     {
-        Task<IEnumerable<ProjectTask>> GetTasksForProject(String name);
-        Task SaveAll(IEnumerable<ProjectTask> tasks);
-        Task SaveNewTask(ProjectTask newTask);
+        Task<IEnumerable<ProjectTaskEntity>> GetTasksForProject(String name);
+        Task SaveAll(IEnumerable<ProjectTaskEntity> tasks);
+        Task SaveNewTask(ProjectTaskEntity newTask);
+        Task UpdateAll(IEnumerable<ProjectTaskEntity> tasks);
     }
 }

@@ -8,7 +8,6 @@ namespace ProjectsToDoList.DataAccess.Repositories
     using ProjectsToDoList.Models;
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Threading.Tasks;
 
     public class TableStorageTasksRepository : ITasksRepository
@@ -29,18 +28,18 @@ namespace ProjectsToDoList.DataAccess.Repositories
             _cloudTableHelper = new CloudTableHelper(storageAccount);
         }
 
-        public async Task<IEnumerable<ProjectTask>> GetTasksForProject(String projectName)
+        public async Task<IEnumerable<ProjectTaskEntity>> GetTasksForProject(String projectName)
         {
             CloudTable table = await _cloudTableHelper.GetCloudTableByName(_configuration["TasksTableName"]);
-            return _cloudTableHelper.GetAllEntitiesByPartitionKey<ProjectTask>(table, projectName);
+            return _cloudTableHelper.GetAllEntitiesByPartitionKey<ProjectTaskEntity>(table, projectName);
         }
 
-        public async Task SaveAll(IEnumerable<ProjectTask> tasks)
+        public async Task SaveAll(IEnumerable<ProjectTaskEntity> tasks)
         {
             CloudTable table = await _cloudTableHelper.GetCloudTableByName(_configuration["TasksTableName"]);
             TableBatchOperation batchOperation = new TableBatchOperation();
 
-            foreach(ProjectTask task in tasks)
+            foreach(ProjectTaskEntity task in tasks)
             {
                 batchOperation.Insert(task);
             }
@@ -48,10 +47,23 @@ namespace ProjectsToDoList.DataAccess.Repositories
             await table.ExecuteBatchAsync(batchOperation);
         }
 
-        public async Task SaveNewTask(ProjectTask newTask)
+        public async Task SaveNewTask(ProjectTaskEntity newTask)
         {
             CloudTable table = await _cloudTableHelper.GetCloudTableByName(_configuration["TasksTableName"]);
-            await _cloudTableHelper.InsertEntityAsync<ProjectTask>(table, newTask);
+            await _cloudTableHelper.InsertEntityAsync<ProjectTaskEntity>(table, newTask);
+        }
+
+        public async Task UpdateAll(IEnumerable<ProjectTaskEntity> tasks)
+        {
+            CloudTable table = await _cloudTableHelper.GetCloudTableByName(_configuration["TasksTableName"]);
+            TableBatchOperation batchOperation = new TableBatchOperation();
+
+            foreach(ProjectTaskEntity task in tasks)
+            {
+                batchOperation.InsertOrMerge(task);
+            }
+
+            await table.ExecuteBatchAsync(batchOperation);
         }
     }
 }

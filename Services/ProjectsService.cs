@@ -34,10 +34,19 @@ namespace ProjectsToDoList.Services
             return projects;
         }
 
-        public async Task<ExistingProjectWithTasks> GetProjectByName(String name)
+        public async Task<ExistingProjectWithTasks> GetProjectByName(String name, Int32 pageNumber, Int32 pageSize)
         {
             ExistingProjectWithTasks project = await _projectsRepository.GetProjectByName(name) as ExistingProjectWithTasks;
-            project.ProjectTasks = await _tasksRepository.GetTasksForProject(name);
+            project.ID = project.RowKey;
+            IEnumerable<ProjectTaskEntity> tasks = await _tasksRepository.GetTasksForProject(name);
+
+            IEnumerable<ProjectTask> newTasks = tasks.Select(task =>
+            {
+                return ProjectTask.CreateFromEntity(task);
+            }); 
+
+            project.ProjectTasks = newTasks.Skip(pageNumber * pageSize).Take(pageSize).ToList();
+            project.NumberOfTasks = tasks.Count();
             return project;
         }
 
@@ -54,11 +63,11 @@ namespace ProjectsToDoList.Services
         public async Task SaveNewProjectWithTasks(NewProjectWithTasks newProject)
         {
             await SaveNewProject(newProject);
-            List<ProjectTask> tasks = new List<ProjectTask>();
+            List<ProjectTaskEntity> tasks = new List<ProjectTaskEntity>();
 
             foreach(String task in newProject.ProjectTasks)
             {
-                tasks.Add(new ProjectTask
+                tasks.Add(new ProjectTaskEntity
                 {
                     PartitionKey = newProject.ProjectName,
                     RowKey = task,
@@ -71,7 +80,7 @@ namespace ProjectsToDoList.Services
 
         public async Task SaveNewTask(String projectName, String taskName)
         {
-            ProjectTask newTask = new ProjectTask
+            ProjectTaskEntity newTask = new ProjectTaskEntity
             {
                 PartitionKey = projectName,
                 RowKey = taskName,
@@ -79,6 +88,25 @@ namespace ProjectsToDoList.Services
             };
 
             await _tasksRepository.SaveNewTask(newTask);
+        }
+
+        public async Task UpdateCurrentProject(ExistingProjectWithTasks project)
+        {
+            Project projectToUpdate = new Project
+            {
+                RowKey = project.ID,
+                ProjectName = project.ProjectName
+            };
+
+            await _projectsRepository.Update(projectToUpdate);
+
+            foreach(ProjectTask task in project.ProjectTasks)
+            {
+                task.PartitionKey = project.ID;
+                task.RowKey = task.ID;
+            }
+
+            await _tasksRepository.UpdateAll(project.ProjectTasks);
         }
     }
 }

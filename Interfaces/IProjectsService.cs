@@ -9,10 +9,11 @@ namespace ProjectsToDoList.Interfaces
     {
         IEnumerable<Project> GetAll();
         IEnumerable<Project> GetPage(Int32 pageNumber, Int32 pageSize);
-        Task<ExistingProjectWithTasks> GetProjectByName(String name);
+        Task<ExistingProjectWithTasks> GetProjectByName(String name, Int32 pageNumber, Int32 pageSize);
         Int32 NumberOfProjects();
         Task SaveNewProject(Project newProject);
         Task SaveNewProjectWithTasks(NewProjectWithTasks newProject);
         Task SaveNewTask(String projectName, String taskName);
+        Task UpdateCurrentProject(ExistingProjectWithTasks project);
     }
 }

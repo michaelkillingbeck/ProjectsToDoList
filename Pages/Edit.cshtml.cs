@@ -20,6 +20,7 @@ namespace ProjectsToDoList.Pages
 
 
         public Int32 CurrentPage => _currentPage;
+        [BindProperty]
         public ExistingProjectWithTasks CurrentProject { get; set; }
         public Boolean NextPageAvailable => _nextPageAvailable;
         public Int32 PageSize => 17;
@@ -37,11 +38,21 @@ namespace ProjectsToDoList.Pages
         public async Task<IActionResult> OnGetAsync(String projectName, Int32 pageNumber = 0)
         {
             _currentPage = pageNumber;
-            CurrentProject = await _projectsService.GetProjectByName(projectName.ToLower());
-            _nextPageAvailable = CurrentProject.ProjectTasks.Count() - (pageNumber * PageSize) > PageSize;
-            CurrentProject.ProjectTasks = CurrentProject.ProjectTasks.Skip(pageNumber * PageSize).Take(PageSize);
+            CurrentProject = await _projectsService.GetProjectByName(projectName.ToLower(), pageNumber, PageSize);
+            _nextPageAvailable = CurrentProject.NumberOfTasks - (pageNumber * PageSize) > PageSize;
 
             return Page();
+        }
+
+        public async Task<IActionResult> OnPostNextPage()
+        {
+            await _projectsService.UpdateCurrentProject(CurrentProject);
+
+            return RedirectToAction("Get", new 
+            { 
+                projectName = CurrentProject.ProjectName, 
+                pageNumber = CurrentPage + 1 
+            });
         }
 
         public async Task<IActionResult> OnPostSaveNewTaskAsync(String projectName, String taskName)

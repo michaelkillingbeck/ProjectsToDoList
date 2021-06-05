@@ -11,5 +11,6 @@ namespace ProjectsToDoList.Interfaces
         IEnumerable<Project> GetPage(Int32 pageNumber, Int32 pageSize);
         Task<ExistingProjectWithTasks> GetProjectByName(String name);
         Task Save(Project project);
+        Task Update(Project project);
     }
 }

@@ -1,16 +1,23 @@
 namespace ProjectsToDoList.Models
 {
-    using Microsoft.Azure.Cosmos.Table;
-    using System;
+    using Microsoft.AspNetCore.Mvc;
 
-    public class ProjectTask : TableEntity
+    public class ProjectTask : ProjectTaskEntity
     {
-        public ProjectTask()
-        {            
-        }
+        [BindProperty]
+        public string ID { get; set; }
 
-        public Boolean Completed { get; set; }
-        public String ProjectRowKey { get; set; }
-        public String TaskName { get; set; }
+        public static ProjectTask CreateFromEntity(ProjectTaskEntity original)
+        {
+            ProjectTask newTask = new ProjectTask();
+
+            newTask.ID = original.RowKey;
+            newTask.PartitionKey = original.PartitionKey;
+            newTask.RowKey = original.RowKey;
+            newTask.TaskName = original.TaskName;
+            newTask.Timestamp = original.Timestamp;
+
+            return newTask;
+        }
     }
 }

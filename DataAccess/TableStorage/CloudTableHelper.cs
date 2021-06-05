@@ -100,5 +100,28 @@ namespace ProjectsToDoList.DataAccess.TableStorage
                 throw;
             }
         }
+
+        public async Task<T> UpdateEntityAsync<T>(CloudTable table, T entity) where T : TableEntity
+        {
+            if(entity == null)
+            {
+                throw new ArgumentNullException(nameof(entity));
+            }
+
+            try
+            {
+                TableOperation operation = TableOperation.InsertOrMerge(entity);
+                TableResult result = await table.ExecuteAsync(operation);
+
+                T returnedEntity = result.Result as T;
+
+                return returnedEntity;
+            }
+            catch(Exception)
+            {
+                Console.WriteLine("Failure performing Insert/Merge operation.");
+                throw;
+            }
+        }
     }
 }

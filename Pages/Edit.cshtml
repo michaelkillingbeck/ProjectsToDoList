@@ -7,50 +7,59 @@
     <div class="notepad-content">
         <ul class="notepad-page">
             <li class="project-title">
-                <span id="current-project-title">@Model.CurrentProject.ProjectName</span>
-            </li> 
-
-            @for(Int32 count = 0; count < Math.Min(@Model.CurrentProject.ProjectTasks.Count(), Model.PageSize); count++)
-            {
-                <li>
-                    <input asp-for="CurrentProject.ProjectTasks.ToList()[count].Completed" 
-                            class="notepad-line-item" name="[@count].Completed" />
-                    <input asp-for="CurrentProject.ProjectTasks.ToList()[count].TaskName" 
-                            class="edit-page-task" value="@Model.CurrentProject.ProjectTasks.ToList()[count].TaskName"
-                            name="[@count].TaskName" />
-                </li>
-            }
+                    <span id="current-project-title">@Model.CurrentProject.ProjectName</span>
+            </li>
 
             <form asp-page-handler="savenewtask">
-                <li>
-                    <hidden name="projectname" value="@Model.CurrentProject.ProjectName" />
-                    <input class="notepad-line-item faded-text edit-page-task" id="new-project-task" 
-                            type="text" placeholder="New task..." name="taskname"/>
-                    <button type="submit" id="new-task"
-                            class="btn btn-sm notepad-button basic-notepad-button">Add</button>
-                </li>
+                    <li>
+                        <hidden name="projectname" value="@Model.CurrentProject.ProjectName" />
+                        <input class="notepad-line-item faded-text edit-page-task" id="new-project-task" 
+                                type="text" placeholder="New task..." name="taskname"/>
+                        <button type="submit" id="new-task"
+                                class="btn btn-sm notepad-button basic-notepad-button">Add</button>
+                    </li>
             </form>
 
-            @for(Int32 count = @Model.CurrentProject.ProjectTasks.Count(); count < @Model.PageSize; count++)
-            {
-                <li>
-                    <a class="notepad-line-item"></a>
-                </li>
-            }
+            <form method="post">             
+                <input asp-for="CurrentProject.ProjectName" value="@Model.CurrentProject.ProjectName" type="hidden" />
+                <input asp-for="CurrentPage" value="@Model.CurrentPage" type="hidden" />
+                <input asp-for="CurrentProject.ID" value="@Model.CurrentProject.ID" type="hidden" />
+
+                @for(Int32 count = 0; count < Math.Min(@Model.CurrentProject.ProjectTasks.Count(), Model.PageSize); count++)
+                {
+                    <li>
+                        <input asp-for="CurrentProject.ProjectTasks[count].ID"
+                                value="@Model.CurrentProject.ProjectTasks[count].ID"
+                                type="hidden" />
+                        <input asp-for="CurrentProject.ProjectTasks[count].Completed" 
+                                class="notepad-line-item" />
+                        <input asp-for="CurrentProject.ProjectTasks[count].TaskName" 
+                                class="edit-page-task" 
+                                value="@Model.CurrentProject.ProjectTasks[count].TaskName" />
+                    </li>
+                }
+
+                @for(Int32 count = @Model.CurrentProject.ProjectTasks.Count(); count < @Model.PageSize; count++)
+                {
+                    <li>
+                        <a class="notepad-line-item"></a>
+                    </li>
+                }
+
+                <a asp-page="index" class="btn notepad-button">Back</a>
+                
+                @if(Model.NextPageAvailable)
+                {
+                    <button type="submit" asp-page-handler="nextpage" 
+                            class="btn btn-sm notepad-button">Next Page</button>
+                }
+
+                @if (Model.CurrentPage > 0)
+                {
+                    <a asp-page="Edit" asp-route-projectname="@Model.CurrentProject.ProjectName" 
+                        asp-route-pagenumber="@(@Model.CurrentPage - 1)" class="btn btn-sm notepad-button">Previous Page</a>
+                }
+            </form>
         </ul>
-
-        <a asp-page="index" class="btn notepad-button">Back</a>
-        
-        @if(Model.NextPageAvailable)
-        {
-            <a asp-page="Edit" asp-route-projectname="@Model.CurrentProject.ProjectName" 
-                asp-route-pagenumber="@(@Model.CurrentPage + 1)" class="btn btn-sm notepad-button">Next Page</a>
-        }
-
-        @if (Model.CurrentPage > 0)
-        {
-            <a asp-page="Edit" asp-route-projectname="@Model.CurrentProject.ProjectName" 
-                asp-route-pagenumber="@(@Model.CurrentPage - 1)" class="btn btn-sm notepad-button">Previous Page</a>
-        }
     </div>
 </div>
