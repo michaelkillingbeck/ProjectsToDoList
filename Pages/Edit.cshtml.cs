@@ -13,13 +13,12 @@ namespace ProjectsToDoList.Pages
     public class EditModel : PageModel
     {
         private readonly IConfiguration _configuration;
-        private Int32 _currentPage;
         private readonly ILogger<EditModel> _logger;
         private Boolean _nextPageAvailable;
         private readonly IProjectsService _projectsService;
 
-
-        public Int32 CurrentPage => _currentPage;
+        [BindProperty]
+        public Int32 CurrentPage { get; set; }
         [BindProperty]
         public ExistingProjectWithTasks CurrentProject { get; set; }
         public Boolean NextPageAvailable => _nextPageAvailable;
@@ -30,21 +29,21 @@ namespace ProjectsToDoList.Pages
                             IProjectsService projectsService)
         {            
             _configuration = configuration;
-            _currentPage = 0;
+            CurrentPage = 0;
             _logger = logger;
             _projectsService = projectsService;
         }
 
         public async Task<IActionResult> OnGetAsync(String projectName, Int32 pageNumber = 0)
         {
-            _currentPage = pageNumber;
+            CurrentPage = pageNumber;
             CurrentProject = await _projectsService.GetProjectByName(projectName.ToLower(), pageNumber, PageSize);
             _nextPageAvailable = CurrentProject.NumberOfTasks - (pageNumber * PageSize) > PageSize;
 
             return Page();
         }
 
-        public async Task<IActionResult> OnPostNextPage()
+        public async Task<IActionResult> OnPostNextPageAsync()
         {
             await _projectsService.UpdateCurrentProject(CurrentProject);
 
@@ -60,6 +59,17 @@ namespace ProjectsToDoList.Pages
             await _projectsService.SaveNewTask(projectName.ToLower(), taskName);
 
             return RedirectToPage("Edit", new { projectName });
+        }
+
+        public async Task<IActionResult> OnPostPreviousPageAsync()
+        {
+            await _projectsService.UpdateCurrentProject(CurrentProject);
+
+            return RedirectToAction("Get", new 
+            { 
+                projectName = CurrentProject.ProjectName, 
+                pageNumber = CurrentPage - 1 
+            });
         }
     }
 }

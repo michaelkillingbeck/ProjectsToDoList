@@ -56,8 +56,8 @@
 
                 @if (Model.CurrentPage > 0)
                 {
-                    <a asp-page="Edit" asp-route-projectname="@Model.CurrentProject.ProjectName" 
-                        asp-route-pagenumber="@(@Model.CurrentPage - 1)" class="btn btn-sm notepad-button">Previous Page</a>
+                    <button type="submit" asp-page-handler="previouspage"
+                        class="btn btn-sm notepad-button">Previous Page</button>
                 }
             </form>
         </ul>

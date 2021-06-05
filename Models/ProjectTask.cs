@@ -11,6 +11,7 @@ namespace ProjectsToDoList.Models
         {
             ProjectTask newTask = new ProjectTask();
 
+            newTask.Completed = original.Completed;
             newTask.ID = original.RowKey;
             newTask.PartitionKey = original.PartitionKey;
             newTask.RowKey = original.RowKey;
