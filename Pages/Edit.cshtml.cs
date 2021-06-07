@@ -34,6 +34,11 @@ namespace ProjectsToDoList.Pages
             _projectsService = projectsService;
         }
 
+        public async Task<IActionResult> OnPostDelete(String taskID, String projectName)
+        {
+            return RedirectToAction("Get", new { projectName = projectName });
+        }
+
         public async Task<IActionResult> OnGetAsync(String projectName, Int32 pageNumber = 0)
         {
             CurrentPage = pageNumber;
