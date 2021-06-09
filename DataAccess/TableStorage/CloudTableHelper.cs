@@ -16,6 +16,19 @@ namespace ProjectsToDoList.DataAccess.TableStorage
             _storageAccount = storageAccount;                
         }
 
+        public async Task<TableResult> DeleteAsync<T>(CloudTable table, T entity) where T : TableEntity, new()
+        {
+            try
+            {
+                TableOperation operation = TableOperation.Delete(entity);
+                return await table.ExecuteAsync(operation);
+            }
+            catch(Exception)
+            {
+                throw;
+            }
+        }
+
         public IEnumerable<T> GetAllEntities<T>(CloudTable table) where T : TableEntity, new()
         {
             try

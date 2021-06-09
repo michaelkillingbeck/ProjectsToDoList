@@ -34,11 +34,6 @@ namespace ProjectsToDoList.Pages
             _projectsService = projectsService;
         }
 
-        public async Task<IActionResult> OnPostDelete(String taskID, String projectName)
-        {
-            return RedirectToAction("Get", new { projectName = projectName });
-        }
-
         public async Task<IActionResult> OnGetAsync(String projectName, Int32 pageNumber = 0)
         {
             CurrentPage = pageNumber;
@@ -46,6 +41,12 @@ namespace ProjectsToDoList.Pages
             _nextPageAvailable = CurrentProject.NumberOfTasks - (pageNumber * PageSize) > PageSize;
 
             return Page();
+        }
+        
+        public async Task<IActionResult> OnPostDeleteAsync(String taskID, String projectName)
+        {
+            await _projectsService.DeleteTask(taskID, projectName);
+            return RedirectToAction("Get", new { projectName = projectName });
         }
 
         public async Task<IActionResult> OnPostNextPageAsync()

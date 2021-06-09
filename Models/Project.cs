@@ -7,12 +7,15 @@ namespace ProjectsToDoList.Models
 
     public class Project : TableEntity
     {
-        public Project()
-        {
-        }
+        [BindProperty]
+        public String ID { get; set; }
 
         [BindProperty]
         [Required(ErrorMessage="Project Name is required")]
         public String ProjectName { get; set; }
+
+        public Project()
+        {
+        }
     }
 }

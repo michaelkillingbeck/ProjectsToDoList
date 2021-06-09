@@ -28,6 +28,29 @@ namespace ProjectsToDoList.DataAccess.Repositories
             _cloudTableHelper = new CloudTableHelper(storageAccount);
         }
 
+        public async Task Delete(String taskID, String projectName)
+        {
+            CloudTable table = await _cloudTableHelper.GetCloudTableByName(_configuration["TasksTableName"]);
+            ProjectTask task = new ProjectTask
+            {
+                ETag = "*",
+                PartitionKey = projectName,
+                RowKey = taskID
+            };
+
+            await _cloudTableHelper.DeleteAsync<ProjectTask>(table, task);
+        }
+
+        public async Task DeleteAllTasksForProjectAsync(String projectID)
+        {
+            IEnumerable<ProjectTaskEntity> tasksToDelete = await GetTasksForProject(projectID);
+
+            foreach(ProjectTaskEntity taskToDelete in tasksToDelete)
+            {
+                await Delete(taskToDelete.RowKey, projectID);
+            }
+        }
+
         public async Task<IEnumerable<ProjectTaskEntity>> GetTasksForProject(String projectName)
         {
             CloudTable table = await _cloudTableHelper.GetCloudTableByName(_configuration["TasksTableName"]);

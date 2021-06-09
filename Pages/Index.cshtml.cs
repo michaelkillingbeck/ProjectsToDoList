@@ -45,6 +45,12 @@
             return Page();
         }
 
+        public async Task<IActionResult> OnPostDeleteAsync(String projectID)
+        {
+            await _projectsService.DeleteProject(projectID);
+            return RedirectToPage("Index");
+        }
+
         public async Task<IActionResult> OnPostSaveNewProjectAsync(String projectName)
         {
             Project newProject = new Project

@@ -9,6 +9,7 @@ namespace ProjectsToDoList.DataAccess.Repositories
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Net;
     using System.Threading.Tasks;
 
     public class TableStorageProjectsRepository : IProjectsRepository
@@ -30,15 +31,37 @@ namespace ProjectsToDoList.DataAccess.Repositories
             _cloudTableHelper = new CloudTableHelper(storageAccount);
         }
 
+        public async Task<Boolean> DeleteAsync(String projectID)
+        {
+            CloudTable table = await _cloudTableHelper.GetCloudTableByName(_configuration["TableName"]);
+            Project project = new Project
+            {
+                ETag = "*",
+                PartitionKey = _partitionKey,
+                RowKey = projectID
+            };
+
+            TableResult result = await _cloudTableHelper.DeleteAsync<Project>(table, project);
+
+            return result.HttpStatusCode >= (Int32)HttpStatusCode.OK && result.HttpStatusCode <= (Int32)HttpStatusCode.IMUsed;
+        }
+
         public IEnumerable<Project> GetAll()
         {
             CloudTable table = _cloudTableHelper.GetCloudTableByName(_configuration["TableName"]).Result;
-            return _cloudTableHelper.GetAllEntities<Project>(table);
+            IEnumerable<Project> allProjects = _cloudTableHelper.GetAllEntities<Project>(table);
+
+            return allProjects;
         }
 
         public IEnumerable<Project> GetPage(Int32 pageNumber, Int32 pageSize)
         {
             List<Project> projects = GetAll().Skip(pageNumber * pageSize).Take(pageSize).ToList();
+
+            foreach(Project project in projects)
+            {
+                project.ID = project.RowKey;
+            }
 
             return projects;
         }
@@ -46,6 +69,7 @@ namespace ProjectsToDoList.DataAccess.Repositories
         public async Task<ExistingProjectWithTasks> GetProjectByName(String name)
         {
             CloudTable table = await _cloudTableHelper.GetCloudTableByName(_configuration["TableName"]);
+            
             return await _cloudTableHelper.GetEntity<ExistingProjectWithTasks>(table, _partitionKey, name);
         }
 

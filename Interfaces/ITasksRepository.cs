@@ -7,6 +7,8 @@ namespace ProjectsToDoList.Interfaces
 
     public interface ITasksRepository
     {
+        Task Delete(String taskID, String projectName);
+        Task DeleteAllTasksForProjectAsync(String projectID);
         Task<IEnumerable<ProjectTaskEntity>> GetTasksForProject(String name);
         Task SaveAll(IEnumerable<ProjectTaskEntity> tasks);
         Task SaveNewTask(ProjectTaskEntity newTask);

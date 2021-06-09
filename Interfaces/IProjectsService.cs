@@ -7,6 +7,8 @@ namespace ProjectsToDoList.Interfaces
 
     public interface IProjectsService
     {
+        Task DeleteProject(String projectID);
+        Task DeleteTask(String taskID, String projectName);
         IEnumerable<Project> GetAll();
         IEnumerable<Project> GetPage(Int32 pageNumber, Int32 pageSize);
         Task<ExistingProjectWithTasks> GetProjectByName(String name, Int32 pageNumber, Int32 pageSize);

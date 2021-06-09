@@ -7,6 +7,7 @@ namespace ProjectsToDoList.Interfaces
 
     public interface ICloudTableHelper
     {
+        Task<TableResult> DeleteAsync<T>(CloudTable table, T entity) where T : TableEntity, new();
         IEnumerable<T> GetAllEntities<T>(CloudTable table) where T : TableEntity, new();
         IEnumerable<T> GetAllEntitiesByPartitionKey<T>(CloudTable cloudTable, String partitionKey) where T : TableEntity, new();
         Task<CloudTable> GetCloudTableByName(String tableName);

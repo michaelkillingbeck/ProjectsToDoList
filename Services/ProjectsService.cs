@@ -22,6 +22,20 @@ namespace ProjectsToDoList.Services
             _tasksRepository = tasksRepository;
         }
 
+        public async Task DeleteProject(String projectID)
+        {
+            Boolean success = await _projectsRepository.DeleteAsync(projectID);
+            if(success)
+            {
+                await _tasksRepository.DeleteAllTasksForProjectAsync(projectID);
+            }
+        }
+
+        public async Task DeleteTask(String taskID, String projectName)
+        {
+            await _tasksRepository.Delete(taskID, projectName);
+        }
+
         public IEnumerable<Project> GetAll()
         {
             return _projectsRepository.GetAll();

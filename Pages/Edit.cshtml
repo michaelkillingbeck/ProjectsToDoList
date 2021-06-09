@@ -39,7 +39,8 @@
                         <button asp-page-handler="delete"
                             asp-route-taskId="@Model.CurrentProject.ProjectTasks[count].ID"
                             asp-route-projectName="@Model.CurrentProject.ProjectName"
-                            class="fas fa-trash transparent-button" />
+                            class="fas fa-trash transparent-button"
+                            title="Delete Task" />
                     </li>
                 }
 
