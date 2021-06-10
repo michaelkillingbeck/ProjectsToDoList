@@ -8,6 +8,7 @@
     using ProjectsToDoList.Models;
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
 
     public class IndexModel : PageModel
@@ -39,28 +40,37 @@
         public IActionResult OnGet(Int32 pagenumber = 0)
         {
             _logger.LogDebug($"Getting projects for page {pagenumber}");
-
             _currentPage = pagenumber;
+
             Projects = _projectsService.GetPage(_currentPage, _pageSize);
+            _logger.LogInformation($"Found {Projects.ToList().Count} Projects");
+
             _totalPages = Convert.ToByte(Math.Ceiling((Double)(_projectsService.NumberOfProjects() / PageSize)));
-            
+            _logger.LogInformation($"{_totalPages} worth of Projects");
+
             return Page();
         }
 
         public async Task<IActionResult> OnPostDeleteAsync(String projectID)
         {
+            _logger.LogInformation($"Deleting project {projectID}");
+
             await _projectsService.DeleteProject(projectID);
+            _logger.LogInformation($"{projectID} deleted");
+
             return RedirectToPage("Index");
         }
 
         public async Task<IActionResult> OnPostSaveNewProjectAsync(String projectName)
         {
+            _logger.LogInformation($"Creating new Project with ID/Name of {projectName}");
             Project newProject = new Project
             {
                 ProjectName = projectName
             };
 
             await _projectsService.SaveNewProject(newProject);
+            _logger.LogInformation($"{projectName} created successfully.");
 
             return RedirectToPage("Index");
         }

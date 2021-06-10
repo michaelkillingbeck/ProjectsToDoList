@@ -45,13 +45,21 @@ namespace ProjectsToDoList.Pages
         
         public async Task<IActionResult> OnPostDeleteAsync(String taskID, String projectName)
         {
+            _logger.LogInformation($"Deleting {taskID} from {projectName}");
             await _projectsService.DeleteTask(taskID, projectName);
+
+            _logger.LogInformation($"Deleted {taskID}");
             return RedirectToAction("Get", new { projectName = projectName });
         }
 
         public async Task<IActionResult> OnPostNextPageAsync()
         {
+            _logger.LogInformation($"Navigating to next page; Current Page is {CurrentPage}");
+            _logger.LogInformation($"Updating {CurrentProject.ProjectName}");
+            _logger.LogInformation($"{CurrentProject.ProjectName} has {CurrentProject.ProjectTasks.Count} tasks");
+
             await _projectsService.UpdateCurrentProject(CurrentProject);
+            _logger.LogInformation($"Updated {CurrentProject.ProjectName} successfully");
 
             return RedirectToAction("Get", new 
             { 
@@ -62,14 +70,21 @@ namespace ProjectsToDoList.Pages
 
         public async Task<IActionResult> OnPostSaveNewTaskAsync(String projectName, String taskName)
         {
+            _logger.LogInformation($"Saving {taskName} for {projectName}");
             await _projectsService.SaveNewTask(projectName.ToLower(), taskName);
 
+            _logger.LogInformation($"{taskName} saved successfully");
             return RedirectToPage("Edit", new { projectName });
         }
 
         public async Task<IActionResult> OnPostPreviousPageAsync()
         {
+            _logger.LogInformation($"Navigating to previous page; Current Page is {CurrentPage}");
+            _logger.LogInformation($"Updating {CurrentProject.ProjectName}");
+            _logger.LogInformation($"{CurrentProject.ProjectName} has {CurrentProject.ProjectTasks.Count} tasks");
+
             await _projectsService.UpdateCurrentProject(CurrentProject);
+            _logger.LogInformation($"Updated {CurrentProject.ProjectName} successfully");
 
             return RedirectToAction("Get", new 
             { 

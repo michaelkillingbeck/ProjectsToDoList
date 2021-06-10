@@ -35,6 +35,7 @@ namespace ProjectsToDoList.Pages
             NewProject = newProject;
             if(NewProject.ProjectTasks == null)
             {
+                _logger.LogInformation($"{NewProject.ProjectName} has no tasks");
                 NewProject.ProjectTasks = new List<String>();
             }
         }
@@ -43,10 +44,12 @@ namespace ProjectsToDoList.Pages
         {
             if(ModelState.IsValid == false)
             {
+                _logger.LogWarning($"{ModelState.ErrorCount} errors trying to save {NewProject.ProjectName}");
                 return RedirectToPage("Create", NewProject);
             }
 
             await _projectsService.SaveNewProjectWithTasks(NewProject);
+            _logger.LogInformation($"Saved {NewProject.ProjectName} successfully");
             return RedirectToPage("Index");
         }
     }
