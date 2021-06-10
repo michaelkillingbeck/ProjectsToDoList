@@ -38,6 +38,7 @@ namespace ProjectsToDoList.Services
 
         public IEnumerable<Project> GetAll()
         {
+            _logger.LogDebug("Getting all Projects.");
             return _projectsRepository.GetAll();
         }
 
