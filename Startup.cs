@@ -2,19 +2,14 @@ namespace ProjectsToDoList
 {
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
-    using Microsoft.AspNetCore.HttpsPolicy;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
-    using ProjectsToDoList.DataAccess;
+    using Microsoft.Extensions.Logging.AzureAppServices;
     using ProjectsToDoList.DataAccess.Repositories;
     using ProjectsToDoList.DataAccess.TableStorage;
     using ProjectsToDoList.Interfaces;
     using ProjectsToDoList.Services;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
 
     public class Startup
     {
@@ -33,6 +28,8 @@ namespace ProjectsToDoList
             services.AddScoped<IProjectsService, ProjectsService>();
             services.AddRazorPages();
             services.AddAntiforgery(header => header.HeaderName = "XSRF-TOKEN");
+
+            services.Configure<AzureFileLoggerOptions>(Configuration.GetSection("AzureLogging"));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

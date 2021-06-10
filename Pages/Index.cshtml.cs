@@ -38,6 +38,8 @@
 
         public IActionResult OnGet(Int32 pagenumber = 0)
         {
+            _logger.LogDebug($"Getting projects for page {pagenumber}");
+
             _currentPage = pagenumber;
             Projects = _projectsService.GetPage(_currentPage, _pageSize);
             _totalPages = Convert.ToByte(Math.Ceiling((Double)(_projectsService.NumberOfProjects() / PageSize)));
