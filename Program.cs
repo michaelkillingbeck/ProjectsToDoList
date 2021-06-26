@@ -1,6 +1,7 @@
 namespace ProjectsToDoList
 {
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Hosting;
     using Microsoft.Extensions.Logging;
 
@@ -20,8 +21,11 @@ namespace ProjectsToDoList
                     {
                         logging.ClearProviders();
                         logging.AddConsole();
-                        logging.AddAzureWebAppDiagnostics();
                     });
+                })
+                .ConfigureAppConfiguration(configurationBuilder => 
+                {
+                    configurationBuilder.AddEnvironmentVariables();
                 });
     }
 }

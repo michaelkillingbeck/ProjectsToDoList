@@ -28,8 +28,6 @@ namespace ProjectsToDoList
             services.AddScoped<IProjectsService, ProjectsService>();
             services.AddRazorPages();
             services.AddAntiforgery(header => header.HeaderName = "XSRF-TOKEN");
-
-            services.Configure<AzureFileLoggerOptions>(Configuration.GetSection("AzureLogging"));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
