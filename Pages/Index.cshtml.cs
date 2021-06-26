@@ -46,7 +46,7 @@
             _logger.LogInformation($"Found {Projects.ToList().Count} Projects");
 
             _totalPages = Convert.ToByte(Math.Ceiling((Double)(_projectsService.NumberOfProjects() / PageSize)));
-            _logger.LogInformation($"{_totalPages} worth of Projects");
+            _logger.LogInformation($"{_totalPages + 1} pages worth of Projects");
 
             return Page();
         }
