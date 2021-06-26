@@ -21,6 +21,7 @@ namespace ProjectsToDoList
                     {
                         logging.ClearProviders();
                         logging.AddConsole();
+                        logging.AddAzureWebAppDiagnostics();
                     });
                 })
                 .ConfigureAppConfiguration(configurationBuilder => 
