@@ -48,9 +48,6 @@
             _totalPages = Convert.ToByte(Math.Ceiling((Double)(_projectsService.NumberOfProjects() / PageSize)));
             _logger.LogInformation($"{_totalPages + 1} pages worth of Projects");
 
-            var x = _configuration["Logging:LogLevel:Microsoft"];
-            _logger.LogInformation(x);
-
             return Page();
         }
 

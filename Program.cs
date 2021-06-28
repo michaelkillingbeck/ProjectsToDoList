@@ -21,12 +21,9 @@ namespace ProjectsToDoList
                     {
                         logging.ClearProviders();
                         logging.AddConsole();
+                        logging.AddFilter("Microsoft", LogLevel.Warning);
                         logging.AddAzureWebAppDiagnostics();
                     });
-                })
-                .ConfigureAppConfiguration(configurationBuilder => 
-                {
-                    configurationBuilder.AddEnvironmentVariables();
                 });
     }
 }
