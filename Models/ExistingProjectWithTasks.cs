@@ -6,9 +6,6 @@ namespace ProjectsToDoList.Models
 
     public class ExistingProjectWithTasks : Project
     {
-        [BindProperty]
-        public String ID { get; set; }
-
         public Int32 NumberOfTasks { get; set; }
 
         [BindProperty]

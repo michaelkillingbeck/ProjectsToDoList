@@ -1,5 +1,6 @@
 ﻿namespace ProjectsToDoList.Pages
 {
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.RazorPages;
     using Microsoft.Extensions.Configuration;
@@ -11,6 +12,7 @@
     using System.Linq;
     using System.Threading.Tasks;
 
+    [Authorize]
     public class IndexModel : PageModel
     {
         private readonly IConfiguration _configuration;

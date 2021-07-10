@@ -13,12 +13,16 @@
     <link rel="stylesheet" href="~/css/index.css" />
     <link rel="stylesheet" href="~/css/create.css" />
     <link rel="stylesheet" href="~/css/edit.css" />
+
+    @await RenderSectionAsync("Styles", required: false)
 </head>
 <body>
     <header class="header">
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand centred-title" asp-area="" asp-page="/Index">Projects To-Do List</a>
+                <a class="navbar-brand centred-title" asp-page="/Index">Projects To-Do List</a>
+                <a class="navbar-brand centred-title" asp-page="Login">Login</a>
+                <a class="navbar-brand centred-title" asp-page="Register">Register</a>
             </div>
         </nav>
     </header>
@@ -29,7 +33,7 @@
     </div>
 
     <footer class="footer text-muted">
-        <p>version 0.0.0.26</p>
+        <p>version 0.0.0.27</p>
     </footer>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

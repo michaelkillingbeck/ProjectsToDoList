@@ -1,0 +1,26 @@
+@page
+@model ViewOnlyModel
+@using ProjectsToDoList.Models
+@{
+    ViewData["Title"] = "Projects";
+}
+
+<div class="notepad-page-container">
+    <div class="notepad-content">
+        <ul class="notepad-page">
+            @foreach (Project project in Model.Projects)
+            {
+                <li>
+                    <a class="notepad-line-item">@project.ProjectName</a>
+                </li>
+            }
+
+            @for(Int32 count = Model.Projects.Count() + 1; count <= Model.PageSize; count++)
+            {
+                <li>
+                    <span class="notepad-line-item"></span>    
+                </li>
+            }
+        </ul>
+    </div>
+</div>
