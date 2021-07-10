@@ -33,37 +33,45 @@ namespace ProjectsToDoList.Pages
 
         public async Task<IActionResult> OnPostAsync()
         {
-            User newUser = new User
+            if(ModelState.IsValid)
             {
-                Id = Guid.NewGuid().ToString(),
-                NormalizedUserName = NewUser.UserName,
-                UserName = NewUser.UserName
-            };
-            
-            Boolean validPassword = true;
-            
-            foreach(IPasswordValidator<User> passwordValidator in _userManager.PasswordValidators)
-            {
-                IdentityResult result = await passwordValidator.ValidateAsync(_userManager, null, NewUser.Password);
-
-                if(result.Succeeded == false)
+                User newUser = new User
                 {
-                    validPassword = false;
-                    break;
+                    Id = Guid.NewGuid().ToString(),
+                    NormalizedUserName = NewUser.UserName,
+                    UserName = NewUser.UserName
+                };
+                
+                Boolean validPassword = true;
+                
+                foreach(IPasswordValidator<User> passwordValidator in _userManager.PasswordValidators)
+                {
+                    IdentityResult result = await passwordValidator.ValidateAsync(_userManager, null, NewUser.Password);
+
+                    if(result.Succeeded == false)
+                    {
+                        validPassword = false;
+                        break;
+                    }
+                } 
+
+                if(validPassword == false)
+                {
+                    ModelState.AddModelError("NewUser.Password", "Password is not valid");
+                    return Page();
                 }
-            } 
 
-            if(validPassword == false)
-            {
-                return RedirectToPage("Register");
+                String hashedPasword = _passwordHasher.HashPassword(newUser, NewUser.Password);
+                newUser.PasswordHash = hashedPasword;
+
+                await _userManager.CreateAsync(newUser);
+
+                return RedirectToPage("Login");
             }
-
-            String hashedPasword = _passwordHasher.HashPassword(newUser, NewUser.Password);
-            newUser.PasswordHash = hashedPasword;
-
-            await _userManager.CreateAsync(newUser);
-
-            return RedirectToAction("Index");
+            else
+            {
+                return Page();
+            }
         }
     }
 }

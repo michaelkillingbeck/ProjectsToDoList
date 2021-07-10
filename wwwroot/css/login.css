@@ -1,0 +1,12 @@
+.notepad-page > form > li:first-child {
+    padding-top: 35px;
+}
+
+.validation-summary-errors > ul {
+    padding-left: 0px;
+}
+
+.validation-summary-errors > ul > li {
+    border: none;
+    margin-left: 0px;
+}

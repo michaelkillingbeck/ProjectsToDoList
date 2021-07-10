@@ -2,7 +2,7 @@
 @model LoginModel
 
 @section Styles{
-    <link rel="Stylesheet" href="~/css/register.css" />
+    <link rel="Stylesheet" href="~/css/login.css" />
 }
 
 <div class="notepad-page-container">
@@ -10,8 +10,13 @@
         <ul class="notepad-page">
             <form id="login-form" method="post">
                 <li>
+                    <span class="notepad-line-item new-project-placeholder"></span>
+                </li>
+
+                <li>
                     <span class="notepad-line-item new-project-placeholder">User Name</span>
                 </li>
+
                 <li>
                     <input class="notepad-line-item new-project-placeholder faded-text" 
                         asp-for="SignInUser.UserName" type="text" placeholder="Enter a username...">
@@ -20,9 +25,14 @@
                 <li>
                     <span class="notepad-line-item new-project-placeholder">Password</span>
                 </li>
+
                 <li>
                     <input class="notepad-line-item new-project-placeholder faded-text" 
                         asp-for="SignInUser.Password" type="password" placeholder="Enter a password...">
+                </li>
+
+                <li>
+                    <div class="notepad-line-item text-danger" asp-validation-summary="ModelOnly"></div>
                 </li>
 
                 <button class="btn notepad-button" type="submit">Sign In</button>

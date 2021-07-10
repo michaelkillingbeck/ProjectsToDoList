@@ -29,6 +29,12 @@ namespace ProjectsToDoList.Pages
             return Page();
         }
 
+        public async Task<IActionResult> OnGetLogoutAsync()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToPage("Index");
+        }
+
         public async Task<IActionResult> OnPostAsync()
         {
             if(ModelState.IsValid)

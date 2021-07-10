@@ -10,27 +10,45 @@
         <ul class="notepad-page">
             <form id="register-form" method="post">
                 <li>
-                    <span class="notepad-line-item new-project-placeholder">User Name</span>
+                    <span class="notepad-line-item new-project-placeholder">User Name</span>                    
                 </li>
+                
                 <li>
                     <input class="notepad-line-item new-project-placeholder faded-text" 
                         asp-for="NewUser.UserName" type="text" placeholder="Enter a username...">
                 </li>
 
                 <li>
-                    <span class="notepad-line-item new-project-placeholder">Password</span>
+                    <span class="notepad-line-item new-project-placeholder text-danger" 
+                            asp-validation-for="NewUser.UserName"></span>
                 </li>
+
+                <li>
+                    <span class="notepad-line-item new-project-placeholder">Password</span>                    
+                </li>
+
                 <li>
                     <input class="notepad-line-item new-project-placeholder faded-text" 
                         asp-for="NewUser.Password" type="password" placeholder="Enter a password...">
                 </li>
 
                 <li>
-                    <span class="notepad-line-item new-project-placeholder">Confirm Password</span>
+                    <span class="notepad-line-item new-project-placeholder text-danger" 
+                        asp-validation-for="NewUser.Password"></span>
                 </li>
+
+                <li>
+                    <span class="notepad-line-item new-project-placeholder">Confirm Password</span>                    
+                </li>
+
                 <li>
                     <input class="notepad-line-item new-project-placeholder faded-text" 
                         asp-for="NewUser.PasswordConfirm" type="password" placeholder="Confirm your password...">
+                </li>
+
+                <li>
+                    <span class="notepad-line-item new-project-placeholder text-danger" 
+                        asp-validation-for="NewUser.PasswordConfirm"></span>
                 </li>
 
                 <button class="btn notepad-button" type="submit">Register</button>
