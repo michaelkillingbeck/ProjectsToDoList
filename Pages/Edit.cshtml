@@ -3,18 +3,28 @@
 
 @Html.AntiForgeryToken()
 
+@section Styles{
+    <link rel="Stylesheet" href="~/css/edit.css" />
+}
+
 <div class="notepad-page-container">
     <div class="notepad-content">
         <ul class="notepad-page">
             <li class="project-title">
                     <span id="current-project-title">@Model.CurrentProject.ProjectName</span>
+
+                    <input id="current-project-private" class="notepad-line-item" type="checkbox" checked=@Model.CurrentProject.Private />
+                    
+                    <span class="faded-text project-private">Private?</span>
             </li>
 
             <form asp-page-handler="savenewtask">
                     <li>
-                        <hidden name="projectname" value="@Model.CurrentProject.ProjectName" />
+                        <hidden name="projectname" value="@Model.CurrentProject.ProjectName" />                        
+
                         <input class="notepad-line-item faded-text edit-page-task" id="new-project-task" 
                                 type="text" placeholder="New task..." name="taskname"/>
+
                         <button type="submit" id="new-task"
                                 class="btn btn-sm notepad-button basic-notepad-button">Add</button>
                     </li>
@@ -22,8 +32,12 @@
 
             <form method="post">             
                 <input asp-for="CurrentProject.ProjectName" value="@Model.CurrentProject.ProjectName" type="hidden" />
+
                 <input asp-for="CurrentPage" value="@Model.CurrentPage" type="hidden" />
+
                 <input asp-for="CurrentProject.ID" value="@Model.CurrentProject.ID" type="hidden" />
+
+                <input asp-for="CurrentProject.Private" value="@Model.CurrentProject.Private" type="hidden" />
 
                 @for(Int32 count = 0; count < Math.Min(@Model.CurrentProject.ProjectTasks.Count(), Model.PageSize); count++)
                 {
@@ -31,11 +45,14 @@
                         <input asp-for="CurrentProject.ProjectTasks[count].ID"
                                 value="@Model.CurrentProject.ProjectTasks[count].ID"
                                 type="hidden" />
+
                         <input asp-for="CurrentProject.ProjectTasks[count].Completed" 
                                 class="notepad-line-item" />
+
                         <input asp-for="CurrentProject.ProjectTasks[count].TaskName" 
                                 class="edit-page-task" 
                                 value="@Model.CurrentProject.ProjectTasks[count].TaskName" />
+                                
                         <button asp-page-handler="delete"
                             asp-route-taskId="@Model.CurrentProject.ProjectTasks[count].ID"
                             asp-route-projectName="@Model.CurrentProject.ProjectName"
@@ -64,7 +81,13 @@
                     <button type="submit" asp-page-handler="previouspage"
                         class="btn btn-sm notepad-button">Previous Page</button>
                 }
+
+                <button class="btn notepad-button" type="submit">Save</button>
             </form>
         </ul>
     </div>
 </div>
+
+@section Scripts{
+    <script src="~/js/edit.js"></script>
+}

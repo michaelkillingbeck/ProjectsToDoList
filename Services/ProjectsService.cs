@@ -42,9 +42,17 @@ namespace ProjectsToDoList.Services
             return _projectsRepository.GetAll();
         }
 
-        public IEnumerable<Project> GetPage(Int32 pageNumber, Int32 pageSize)
+        public IEnumerable<Project> GetPage(Int32 pageNumber, Int32 pageSize, Boolean anonymise = false)
         {
             IEnumerable<Project> projects = _projectsRepository.GetPage(pageNumber, pageSize);
+
+            if(anonymise)
+            {
+                projects.Where(project => project.Private).ToList().ForEach(project =>
+                {
+                    project.ProjectName = "Private Project";
+                });
+            }
 
             return projects;
         }
@@ -109,6 +117,7 @@ namespace ProjectsToDoList.Services
         {
             Project projectToUpdate = new Project
             {
+                Private = project.Private,
                 RowKey = project.ID,
                 ProjectName = project.ProjectName
             };

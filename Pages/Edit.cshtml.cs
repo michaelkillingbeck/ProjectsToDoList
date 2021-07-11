@@ -42,6 +42,13 @@ namespace ProjectsToDoList.Pages
 
             return Page();
         }
+
+        public async Task<IActionResult> OnPostAsync()
+        {
+            await _projectsService.UpdateCurrentProject(CurrentProject);
+
+            return RedirectToPage("Index");
+        }
         
         public async Task<IActionResult> OnPostDeleteAsync(String taskID, String projectName)
         {

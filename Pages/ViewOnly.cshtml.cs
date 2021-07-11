@@ -36,7 +36,8 @@ namespace ProjectsToDoList.Pages
         {
             _logger.LogDebug($"Getting View Only projects index");
 
-            Projects = _projectsService.GetPage(0, _pageSize);
+            Projects = _projectsService.GetPage(0, _pageSize, true);
+
             _logger.LogInformation($"Found {Projects.ToList().Count} Projects");
 
             return Page();

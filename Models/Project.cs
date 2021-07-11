@@ -11,6 +11,9 @@ namespace ProjectsToDoList.Models
         public String ID { get; set; }
 
         [BindProperty]
+        public Boolean Private { get; set; }
+
+        [BindProperty]
         [Required(ErrorMessage="Project Name is required")]
         public String ProjectName { get; set; }
 

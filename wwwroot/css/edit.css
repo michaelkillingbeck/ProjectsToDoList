@@ -11,6 +11,10 @@
     border: none;
 }
 
+.project-private {
+    font-size: 14px;
+}
+
 .project-title {
     text-align: center;
     margin-left: 0px;

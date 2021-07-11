@@ -10,7 +10,7 @@ namespace ProjectsToDoList.Interfaces
         Task DeleteProject(String projectID);
         Task DeleteTask(String taskID, String projectName);
         IEnumerable<Project> GetAll();
-        IEnumerable<Project> GetPage(Int32 pageNumber, Int32 pageSize);
+        IEnumerable<Project> GetPage(Int32 pageNumber, Int32 pageSize, Boolean anonymise = false);
         Task<ExistingProjectWithTasks> GetProjectByName(String name, Int32 pageNumber, Int32 pageSize);
         Int32 NumberOfProjects();
         Task SaveNewProject(Project newProject);
