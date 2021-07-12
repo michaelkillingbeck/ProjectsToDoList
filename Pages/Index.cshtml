@@ -12,7 +12,15 @@
             @foreach (Project project in Model.Projects)
             {
                 <li>
-                    <a asp-page="Edit" asp-route-projectname="@project.ProjectName" class="notepad-line-item">@project.ProjectName</a>
+                    @if(project.Complete)
+                    {
+                        <a asp-page="Edit" asp-route-projectname="@project.ProjectName" class="notepad-line-item  complete-project">@project.ProjectName</a>
+                    }
+                    else
+                    {
+                        <a asp-page="Edit" asp-route-projectname="@project.ProjectName" class="notepad-line-item">@project.ProjectName</a>
+                    }
+
                     <form method="post" class="inline-form">
                         <button asp-page-handler="delete"                            
                                 asp-route-projectID="@project.ID"

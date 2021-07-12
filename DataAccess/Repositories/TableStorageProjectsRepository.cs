@@ -54,7 +54,7 @@ namespace ProjectsToDoList.DataAccess.Repositories
             return allProjects;
         }
 
-        public IEnumerable<Project> GetPage(Int32 pageNumber, Int32 pageSize)
+        public async Task<IEnumerable<Project>> GetPage(Int32 pageNumber, Int32 pageSize)
         {
             List<Project> projects = GetAll().Skip(pageNumber * pageSize).Take(pageSize).ToList();
 

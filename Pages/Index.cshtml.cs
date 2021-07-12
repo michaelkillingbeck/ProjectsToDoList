@@ -39,15 +39,15 @@
             _projectsService = projectsService;
         }
 
-        public IActionResult OnGet(Int32 pagenumber = 0)
+        public async Task<IActionResult> OnGet(Int32 pagenumber = 0)
         {
             _logger.LogDebug($"Getting projects for page {pagenumber}");
             _currentPage = pagenumber;
 
-            Projects = _projectsService.GetPage(_currentPage, _pageSize);
+            Projects = await _projectsService.GetPage(_currentPage, _pageSize);
             _logger.LogInformation($"Found {Projects.ToList().Count} Projects");
 
-            _totalPages = Convert.ToByte(Math.Ceiling((Double)(_projectsService.NumberOfProjects() / PageSize)));
+            _totalPages = Convert.ToByte(Math.Ceiling((Double)(await _projectsService.NumberOfProjects() / PageSize)));
             _logger.LogInformation($"{_totalPages + 1} pages worth of Projects");
 
             return Page();

@@ -8,6 +8,9 @@ namespace ProjectsToDoList.Models
     public class Project : TableEntity
     {
         [BindProperty]
+        public Boolean Complete { get; set; }
+        
+        [BindProperty]
         public String ID { get; set; }
 
         [BindProperty]

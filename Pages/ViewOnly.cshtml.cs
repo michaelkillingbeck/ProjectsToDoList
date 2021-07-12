@@ -10,6 +10,7 @@ namespace ProjectsToDoList.Pages
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
 
     [AllowAnonymous]
     public class ViewOnlyModel : PageModel
@@ -32,11 +33,11 @@ namespace ProjectsToDoList.Pages
             _projectsService = projectsService;
         }
 
-        public IActionResult OnGet(Int32 pagenumber = 0)
+        public async Task<IActionResult> OnGet(Int32 pagenumber = 0)
         {
             _logger.LogDebug($"Getting View Only projects index");
 
-            Projects = _projectsService.GetPage(0, _pageSize, true);
+            Projects = await _projectsService.GetPage(0, _pageSize, true);
 
             _logger.LogInformation($"Found {Projects.ToList().Count} Projects");
 

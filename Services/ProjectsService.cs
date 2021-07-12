@@ -36,15 +36,22 @@ namespace ProjectsToDoList.Services
             await _tasksRepository.Delete(taskID, projectName);
         }
 
-        public IEnumerable<Project> GetAll()
+        public async Task<IEnumerable<Project>> GetAll()
         {
             _logger.LogDebug("Getting all Projects.");
+            IEnumerable<Project> projects = _projectsRepository.GetAll();
+
+            foreach(Project project in projects)
+            {
+                project.Complete = await _tasksRepository.AllTasksAreCompleted(project.ProjectName);
+            }
+
             return _projectsRepository.GetAll();
         }
 
-        public IEnumerable<Project> GetPage(Int32 pageNumber, Int32 pageSize, Boolean anonymise = false)
+        public async Task<IEnumerable<Project>> GetPage(Int32 pageNumber, Int32 pageSize, Boolean anonymise = false)
         {
-            IEnumerable<Project> projects = _projectsRepository.GetPage(pageNumber, pageSize);
+            IEnumerable<Project> projects = await _projectsRepository.GetPage(pageNumber, pageSize);
 
             if(anonymise)
             {
@@ -53,6 +60,11 @@ namespace ProjectsToDoList.Services
                     project.ProjectName = "Private Project";
                 });
             }
+
+            projects.ToList().ForEach(async project =>
+            {
+                project.Complete = await _tasksRepository.AllTasksAreCompleted(project.ProjectName);
+            });
 
             return projects;
         }
@@ -73,9 +85,9 @@ namespace ProjectsToDoList.Services
             return project;
         }
 
-        public Int32 NumberOfProjects()
+        public async Task<Int32> NumberOfProjects()
         {
-            return GetAll().Count();
+            return (await GetAll()).Count();
         }
 
         public async Task SaveNewProject(Project newProject)

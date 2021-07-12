@@ -8,6 +8,7 @@ namespace ProjectsToDoList.DataAccess.Repositories
     using ProjectsToDoList.Models;
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
 
     public class TableStorageTasksRepository : ITasksRepository
@@ -26,6 +27,13 @@ namespace ProjectsToDoList.DataAccess.Repositories
             String connectionString = configuration["ConnectionString"];
             CloudStorageAccount storageAccount = storageHelper.CreateFromConnectionString(connectionString);
             _cloudTableHelper = new CloudTableHelper(storageAccount);
+        }
+
+        public async Task<Boolean> AllTasksAreCompleted(String projectName)
+        {
+            IEnumerable<ProjectTaskEntity> tasks = await GetTasksForProject(projectName);
+
+            return tasks.All(task => task.Completed);
         }
 
         public async Task Delete(String taskID, String projectName)

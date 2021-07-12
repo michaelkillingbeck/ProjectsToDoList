@@ -9,7 +9,7 @@ namespace ProjectsToDoList.Interfaces
     {
         Task<Boolean> DeleteAsync(String projectID);
         IEnumerable<Project> GetAll();
-        IEnumerable<Project> GetPage(Int32 pageNumber, Int32 pageSize);
+        Task<IEnumerable<Project>> GetPage(Int32 pageNumber, Int32 pageSize);
         Task<ExistingProjectWithTasks> GetProjectByName(String name);
         Task Save(Project project);
         Task Update(Project project);

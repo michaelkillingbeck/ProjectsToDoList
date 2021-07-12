@@ -7,6 +7,10 @@ a:hover {
   text-decoration: none;
 }
 
+.complete-project {
+  text-decoration: line-through;
+}
+
 .create-new {
     background: none;
     border-color: #38a7e7;
