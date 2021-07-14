@@ -4,11 +4,6 @@ input:focus {
 
 input:invalid:required {
     color: red;
-}  
-
-.new-project-placeholder {
-    background-color: transparent;
-    border: none;
 }
 
 .new-project-title {

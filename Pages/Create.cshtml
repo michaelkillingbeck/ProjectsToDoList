@@ -3,6 +3,9 @@
 
 @Html.AntiForgeryToken()
 
+    <link rel="stylesheet" href="~/css/create.css" />
+
+
 @Html.HiddenFor(model => model.PageSize)
 
 <div class="notepad-page-container">
@@ -12,19 +15,19 @@
                 <span asp-validation-for="NewProject.ProjectName" class="text-danger notepad-line-item"></span>
 
                 <li>
-                    <input asp-for="NewProject.ProjectName" class="notepad-line-item faded-text new-project-placeholder" 
+                    <input asp-for="NewProject.ProjectName" class="notepad-line-item faded-text placeholder-input" 
                         type="text" id="new-project-title" placeholder="Project title..." required />
                 </li>
 
                 <li>
-                    <input class="notepad-line-item faded-text new-project-placeholder" id="new-project-task" 
+                    <input class="notepad-line-item faded-text placeholder-input" id="new-project-task" 
                     type="text" placeholder="New task..."/>
                 </li>
                 <ul id="project-tasks">
                     @for(Int32 count = 0; count < @Model.PageSize; count++)
                     {
                         <li>
-                            <input readonly="readonly" class="notepad-line-item new-task new-project-placeholder"></input>  
+                            <input readonly="readonly" class="notepad-line-item new-task placeholder-input"></input>  
                         </li>
                     }
                 </ul>

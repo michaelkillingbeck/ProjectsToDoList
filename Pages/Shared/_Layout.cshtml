@@ -3,15 +3,13 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"]</title>
+    <title>@(String.IsNullOrEmpty(ViewData["Title"]?.ToString()) ? "Projects" : ViewData["Title"].ToString())</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/lib/font-awesome/css/all.css" />
     <link rel="stylesheet" href="~/lib/font-awesome/css/brands.css" />
     <link rel="stylesheet" href="~/lib/font-awesome/css/solid.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="~/css/notepad.css" />
-    <link rel="stylesheet" href="~/css/index.css" />
-    <link rel="stylesheet" href="~/css/create.css" />
 
     @await RenderSectionAsync("Styles", required: false)
 </head>
@@ -45,7 +43,7 @@
     </div>
 
     <footer class="footer text-muted">
-        <p>version 0.0.0.30</p>
+        <p>version 0.0.0.31</p>
     </footer>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

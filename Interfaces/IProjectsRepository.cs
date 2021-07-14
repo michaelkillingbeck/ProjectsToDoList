@@ -8,7 +8,7 @@ namespace ProjectsToDoList.Interfaces
     public interface IProjectsRepository
     {
         Task<Boolean> DeleteAsync(String projectID);
-        IEnumerable<Project> GetAll();
+        Task<IEnumerable<Project>> GetAll();
         Task<IEnumerable<Project>> GetPage(Int32 pageNumber, Int32 pageSize);
         Task<ExistingProjectWithTasks> GetProjectByName(String name);
         Task Save(Project project);

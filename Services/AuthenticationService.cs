@@ -1,6 +1,7 @@
 namespace ProjectsToDoList.Services
 {
     using Microsoft.AspNetCore.Identity;
+    using Microsoft.Extensions.Logging;
     using ProjectsToDoList.Interfaces;
     using ProjectsToDoList.Models;
     using System;
@@ -12,29 +13,37 @@ namespace ProjectsToDoList.Services
         IRoleStore<Role>,
         IUserPasswordStore<User>
     {
+        private readonly ILogger<AuthenticationService> _logger;
         private readonly IPasswordHasher<User> _passwordHasher;
         private readonly IUsersRepository _usersRepository;
 
-        public AuthenticationService(IUsersRepository usersRepository, IPasswordHasher<User> passwordHasher)
+        public AuthenticationService(IUsersRepository usersRepository, IPasswordHasher<User> passwordHasher, ILogger<AuthenticationService> logger)
         {
+            _logger = logger;
             _passwordHasher = passwordHasher;
             _usersRepository = usersRepository;
         }
 
         public async Task<IdentityResult> CreateAsync(User user, CancellationToken cancellationToken)
         {
+            cancellationToken.ThrowIfCancellationRequested();
+
+            _logger.LogInformation("Request to create new User");
+            _logger.LogInformation(user.ToString());
             Boolean result = await _usersRepository.CreateAsync(user);
 
             IdentityResult identityResult = new IdentityResult();
 
             if(!result)
             {
+                _logger.LogError("Failed to create new User");
                 return IdentityResult.Failed(new IdentityError
                 {
                     Description = "Failed to create user"
                 });
             }
 
+            _logger.LogInformation("New User created successfully.");
             return identityResult;
         }
 
@@ -62,9 +71,18 @@ namespace ProjectsToDoList.Services
             return null;
         }
 
-        public async Task<User> FindByNameAsync(string normalizedUserName, CancellationToken cancellationToken)
+        public async Task<User> FindByNameAsync(String normalizedUserName, CancellationToken cancellationToken)
         {
+            cancellationToken.ThrowIfCancellationRequested();
+
+            _logger.LogInformation($"Looking up User, Username is {normalizedUserName}");
             User foundUser = await _usersRepository.FindByNameAsync(normalizedUserName);
+
+            if(foundUser == null)
+            {
+                _logger.LogInformation("Did not find User");
+            }
+
             return foundUser;
         }
 
@@ -95,6 +113,9 @@ namespace ProjectsToDoList.Services
 
         public Task<String> GetUserIdAsync(User user, CancellationToken cancellationToken)
         {
+            cancellationToken.ThrowIfCancellationRequested();
+
+            _logger.LogInformation($"Requesting User Id for {user}");
             return Task.FromResult<String>(user.Id);
         }
 
@@ -102,6 +123,7 @@ namespace ProjectsToDoList.Services
         {
             cancellationToken.ThrowIfCancellationRequested();
 
+            _logger.LogInformation($"Requesting User Name for {user}");
             if (user == null) 
             {
                 throw new ArgumentNullException(nameof(user));
@@ -122,7 +144,12 @@ namespace ProjectsToDoList.Services
 
         public Task SetNormalizedUserNameAsync(User user, string normalizedName, CancellationToken cancellationToken)
         {
-            return Task.FromResult<Object>(null);
+            cancellationToken.ThrowIfCancellationRequested();
+
+            _logger.LogInformation($"Setting Normalized Username for: {user.ToString()} to {user.UserName.ToUpper()}");
+            user.NormalizedUserName = user.UserName.ToUpper();
+
+            return Task.CompletedTask;;
         }
 
         public Task SetPasswordHashAsync(User user, string passwordHash, CancellationToken cancellationToken)

@@ -35,10 +35,6 @@ a:hover {
   border: none;
 }
 
-.faded-text {
-  color: grey;
-}
-
 .inline-form {
   display: inline;
   float: right;

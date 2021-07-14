@@ -29,14 +29,14 @@ namespace ProjectsToDoList.DataAccess.TableStorage
             }
         }
 
-        public IEnumerable<T> GetAllEntities<T>(CloudTable table) where T : TableEntity, new()
+        public Task<IEnumerable<T>> GetAllEntities<T>(CloudTable table) where T : TableEntity, new()
         {
             try
             {
                 TableQuery<T> query = new TableQuery<T>();
-                var results = table.ExecuteQuery(query);
+                IEnumerable<T> results = table.ExecuteQuery(query);
 
-                return results;
+                return Task.FromResult<IEnumerable<T>>(results);
             }
             catch(Exception)
             {

@@ -46,17 +46,17 @@ namespace ProjectsToDoList.DataAccess.Repositories
             return result.HttpStatusCode >= (Int32)HttpStatusCode.OK && result.HttpStatusCode <= (Int32)HttpStatusCode.IMUsed;
         }
 
-        public IEnumerable<Project> GetAll()
+        public async Task<IEnumerable<Project>> GetAll()
         {
             CloudTable table = _cloudTableHelper.GetCloudTableByName(_configuration["TableName"]).Result;
-            IEnumerable<Project> allProjects = _cloudTableHelper.GetAllEntities<Project>(table);
+            IEnumerable<Project> allProjects = await _cloudTableHelper.GetAllEntities<Project>(table);
 
             return allProjects;
         }
 
         public async Task<IEnumerable<Project>> GetPage(Int32 pageNumber, Int32 pageSize)
         {
-            List<Project> projects = GetAll().Skip(pageNumber * pageSize).Take(pageSize).ToList();
+            List<Project> projects = (await GetAll()).Skip(pageNumber * pageSize).Take(pageSize).ToList();
 
             foreach(Project project in projects)
             {

@@ -29,6 +29,10 @@
   width: 100%;
 }
 
+.faded-text {
+  color: grey;
+}
+
 .footer {
   height: 5%;
   margin: auto;
@@ -50,6 +54,11 @@ html {
 
 main {
   height: 100%;
+}
+
+.placeholder-input {
+  background-color: transparent;
+  border: none;
 }
 
 @media (min-width: 768px) {
