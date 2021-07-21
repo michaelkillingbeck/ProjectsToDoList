@@ -17,22 +17,29 @@
     <header class="header">
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3">
             <div class="container">
-                @if(User.Identity.IsAuthenticated)
-                {
-                    <span>Welcome, @User.Identity.Name</span>
-                }
+                <div class="sub-container">
+                    @if(User.Identity.IsAuthenticated)
+                    {
+                        <span class="left-title">Welcome, @User.Identity.Name</span>
+                    }
+                </div>
 
-                <a class="navbar-brand centred-title" asp-page="/Index">Projects To-Do List</a>
+                <div class="sub-container centred-text">
+                    <a class="navbar-brand centred-title" asp-page="/Index">Projects To-Do List</a>
+                </div>
+                
 
-                @if(User.Identity.IsAuthenticated == false)
-                {
-                    <a class="navbar-brand centred-title" asp-page="Login">Login</a>
-                    <a class="navbar-brand centred-title" asp-page="Register">Register</a>
-                }
-                else
-                {
-                    <a class="navbar-brand centred-title" asp-page="Login" asp-page-handler="Logout">Logout</a>
-                }
+                <div class="sub-container">
+                    @if(User.Identity.IsAuthenticated == false)
+                    {
+                        <a class="navbar-brand right-title" asp-page="Login">Login</a>
+                        <a class="navbar-brand right-title" asp-page="Register">Register</a>
+                    }
+                    else
+                    {
+                        <a class="navbar-brand right-title" asp-page="Login" asp-page-handler="Logout">Logout</a>
+                    }
+                </div>
             </div>
         </nav>
     </header>
@@ -43,7 +50,7 @@
     </div>
 
     <footer class="footer text-muted">
-        <p>version 0.0.0.31</p>
+        <p>version 0.0.0.32</p>
     </footer>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

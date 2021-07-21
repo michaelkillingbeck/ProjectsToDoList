@@ -19,6 +19,10 @@
   box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
 }
 
+.centred-text {
+  text-align: center;
+}
+
 .centred-title {
   margin: auto;
 }
@@ -50,6 +54,10 @@ html {
   font-size: 14px;
   height: 100%;
   position: relative;
+}
+
+.left-title {
+  float: left;
 }
 
 main {
@@ -90,4 +98,12 @@ main {
   box-shadow: 0 0.5em 0.5em -0.4em var(--hover);
   color: black;
   transform: translateY(-0.25em);
+}
+
+.right-title {
+  float: right;
+}
+
+.sub-container {
+  width: 33%;
 }
